@@ -1,0 +1,3 @@
+update irs set 
+"REC_FLAG" = trim ("REC_FLAG"),
+"USR_ID" = trim ("USR_ID");

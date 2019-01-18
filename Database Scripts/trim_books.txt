@@ -1,0 +1,17 @@
+update books set 
+"LIBNO" = trim ("LIBNO"),
+"TITLE" = trim ("TITLE"),
+"TYPE" = trim ("TYPE"),
+"VOLNO" = trim ("VOLNO"),
+"PARTNO" = trim ("PARTNO"),
+"AUSNAME1" = trim ("AUSNAME1"),
+"AUFNAME1" = trim ("AUFNAME1"),
+"AUSNAME2" = trim ("AUSNAME2"),
+"AUFNAME2" = trim ("AUFNAME2"),
+"PUBCODE" = trim ("PUBCODE"),
+"EDINAME" = trim ("EDINAME"),
+"SUB1" = trim ("SUB1"),
+"SUB2" = trim ("SUB2"),
+"PLACE" = trim ("PLACE"),
+"ISSUE_FLAG" = trim ("ISSUE_FLAG"),
+"USR_ID" = trim ("USR_ID");                  

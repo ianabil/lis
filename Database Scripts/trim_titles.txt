@@ -1,0 +1,3 @@
+update titles set
+"TIT_DESC" = trim ("TIT_DESC"),
+"USR_ID" = trim ("USR_ID");

@@ -1,0 +1,4 @@
+update locas set 
+"LOCNAME" = trim ("LOCNAME"),
+"ALM_RACK" = trim ("ALM_RACK"),
+"USR_ID" = trim ("USR_ID");

@@ -1,0 +1,4 @@
+update subjs set
+"SUBNO" = trim ("SUBNO"),
+"SUBNAME" = trim ("SUBNAME"),
+"USR_ID" = trim ("USR_ID");

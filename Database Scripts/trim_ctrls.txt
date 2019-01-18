@@ -1,0 +1,8 @@
+update ctrls set 
+"ORG_NAME" = trim ("ORG_NAME"),
+"SERVER_IP_ADD" = trim ("SERVER_IP_ADD"),
+"DATABASE_USERID" = trim ("DATABASE_USERID"),
+"DATABASE_USERPASS" = trim ("DATABASE_USERPASS"),
+"VIRTUAL_DIR" = trim ("VIRTUAL_DIR"),
+"FORMS_ROOT" = trim ("FORMS_ROOT"),
+"USR_ID" = trim ("USR_ID");

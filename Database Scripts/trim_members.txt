@@ -1,0 +1,11 @@
+update members set
+"USNAME" = trim ("USNAME"),
+"UFNAME" = trim ("UFNAME"),
+"UDESIG" = trim ("UDESIG"),
+"UPRADD1" = trim ("UPRADD1"),
+"UPRADD2" = trim ("UPRADD2"),
+"UPRADD3" = trim ("UPRADD3"),
+"UPEADD1" = trim ("UPEADD1"),
+"UPEADD2" = trim ("UPEADD2"),
+"UPEADD3" = trim ("UPEADD3"),
+"USR_ID" = trim ("USR_ID");

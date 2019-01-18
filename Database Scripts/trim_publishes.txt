@@ -1,0 +1,5 @@
+update publishes set
+"PUBCODE" = trim ("PUBCODE"),
+"PUBNAME" = trim ("PUBNAME"),
+"PUBADD" = trim ("PUBADD"),
+"USR_ID" = trim ("USR_ID");
