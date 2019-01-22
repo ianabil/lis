@@ -24,18 +24,21 @@ Route::group(['middleware' => ['auth']], function () {
 
       Route::get('/home', 'HomeController@index')->name('home');
 
+      Route::get('dashboard', function () {
+         return view('dashboard');
+      });
 
-      Route::get('dashboard', 'SearchController@index');
+      Route::get('search', 'SearchController@index');
 
-      Route::post('dashboard/search','SearchController@search');
+      Route::post('search/search','SearchController@search');
 
-      Route::post('dashboard/search/issued_to','SearchController@issued_to');
+      Route::post('search/search/issued_to','SearchController@issued_to');      
+
+      Route::resource('books','BooksController');
       
       Route::get('entry_new_book','BooksController@get_data');
 
       Route::get('update_book','BooksController@get_data_for_update_book');
-
-      Route::resource('books','BooksController');
 
       Route::get('issue_books','IssueBookController@get_data_on_load');  
       

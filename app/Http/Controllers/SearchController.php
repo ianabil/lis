@@ -31,7 +31,7 @@ class SearchController extends Controller
         $data['member'] = member::select('USERNO','UFNAME','USNAME')->get();
         
 
-        return view('dashboard',compact('data'));
+        return view('search',compact('data'));
     }
 
     public function search(Request $request){
@@ -45,6 +45,7 @@ class SearchController extends Controller
         $subject = $request->input('subject');
         $edition_no = $request->input('edition_no');
         $edition_year = $request->input('edition_year');
+        $content = trim(strtoupper($request->input('content')));
         $issue_to_member = $request->input('issue_to_member'); 
         $purchase_from_date = $request->input('purchase_from_date');
         $purchase_to_date = $request->input('purchase_to_date');
@@ -61,7 +62,7 @@ class SearchController extends Controller
         $select = 'SELECT DISTINCT "books"."ACCESSNO", "books"."TYPE", "books"."LIBNO", 
         "books"."TITLE", "publishes"."PUBNAME", "books"."AUFNAME1", "books"."AUFNAME2", 
         "books"."AUSNAME1", "books"."AUSNAME2", "books"."VOLNO", "books"."EDENO", 
-        "books"."YEAR", "books"."PRICE", "books"."DTPUR", "books"."COPY_NO", "books"."ISSUE_FLAG"
+        "books"."YEAR", "books"."PRICE", "books"."DTPUR", "books"."COPY_NO", "books"."CONTENT", "books"."ISSUE_FLAG"
         FROM books LEFT JOIN publishes ON "books"."PUBCODE" = "publishes"."PUBCODE"';
 
         // Default WHERE condition
@@ -92,6 +93,9 @@ class SearchController extends Controller
 
         if($edition_year!="")
             $where = $where.' AND "books"."YEAR" = '.$edition_year;
+
+        if($content!="")
+            $where = $where.' AND "books"."CONTENT" LIKE '."'%$content%'";
 
         if($purchase_from_date!="" && $purchase_to_date!="")
             $where = $where.' AND "books"."DTPUR" BETWEEN '."'$purchase_from_date'".' AND '."'$purchase_to_date'";
@@ -148,7 +152,8 @@ class SearchController extends Controller
             12 =>'Purchase Date',
             13 =>'Copy No',
             14 =>'Issued To',
-            15 =>'Issue Date'
+            15 =>'Issue Date',
+            16 =>'Content'
         );
 
         $limit = $request->input('length'); // For No. of rows per page
@@ -183,8 +188,8 @@ class SearchController extends Controller
             foreach($data as $data){                
                 if($data->ISSUE_FLAG==''){
                     $nestedData['Book Status'] = '<span class="badge badge-success" style="background-color:#468847">AVAILABLE</span>';
-                    $nestedData['Issued To'] = '';
-                    $nestedData['Issue Date'] = '';
+                    $nestedData['Issued To'] = 'NA';
+                    $nestedData['Issue Date'] = 'NA';
                 }
                 if($data->ISSUE_FLAG=='Y'){
                     $nestedData['Book Status'] = '<span class="badge badge-danger not_available" style="background-color:#953b39; cursor:pointer">NOT AVAILABLE</span>';                    
@@ -197,6 +202,8 @@ class SearchController extends Controller
                 }
                 if($data->ISSUE_FLAG=='D'){
                     $nestedData['Book Status'] = '<span class="badge badge-primary" style="background-color:#FF4500">DISCARDED</span>';
+                    $nestedData['Issued To'] = 'NA';
+                    $nestedData['Issue Date'] = 'NA';
                 }
 
                 $nestedData['Accession No'] = $data->ACCESSNO;
@@ -209,7 +216,7 @@ class SearchController extends Controller
                     $nestedData['Type'] = 'Book';
                     
                 if($data->TYPE =='P')
-                    $nestedData['Type'] = 'Publication';
+                    $nestedData['Type'] = 'Periodicals';
 
                 if($data->TYPE =='A')
                     $nestedData['Type'] = 'Bare Act';
@@ -224,6 +231,7 @@ class SearchController extends Controller
                 $nestedData['Price (INR)'] = $data->PRICE;
                 $nestedData['Purchase Date'] = Carbon::parse($data->DTPUR)->format('d/m/Y');
                 $nestedData['Copy No'] = $data->COPY_NO;
+                $nestedData['Content'] = $data->CONTENT;
 
                 $books[] = $nestedData;
             }
