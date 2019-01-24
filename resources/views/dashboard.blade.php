@@ -7,7 +7,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text"><strong>Last Accession No.</strong></span>
-              <span class="info-box-number">96528</span>
+              <span class="info-box-number">{{$data['last_accession_no']}}</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -20,7 +20,7 @@
     
                 <div class="info-box-content">
                   <span class="info-box-text"><strong>Issued Book On Today</strong></span>                  
-                  <span class="info-box-number">16</span>
+                  <span class="info-box-number">{{$data['issue_count']}}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -33,7 +33,7 @@
     
                 <div class="info-box-content">
                   <span class="info-box-text"><strong>Returned Book On Today</strong></span>
-                  <span class="info-box-number">16</span>
+                  <span class="info-box-number">{{$data['receive_count']}}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -58,38 +58,16 @@
             <!-- /.box-header -->
             <div class="box-body">
               <ul class="products-list product-list-in-box">
-                <li class="item">
-                  <div class="product-info">
-                    Book ABC
-                    <span class="label label-warning pull-right">$1800</span>
-                    <span class="product-description"> Publisher Name: PUB1 </span>
-                  </div>
-                </li>
-                <!-- /.item -->
-                <li class="item">
+                @foreach($data['recently_added_books'] as $books)
+                  <li class="item">
                     <div class="product-info">
-                          Book EFG
-                        <span class="label label-warning pull-right">$1800</span>
-                        <span class="product-description"> Publisher Name: PUB2 </span>
+                      {{$books['TITLE']}}
+                      <span class="label label-warning pull-right">{{$books['ACCESSNO']}}</span>
+                      <span class="product-description"> Publisher Name: PUB1 </span>
                     </div>
-                </li>
-                <!-- /.item -->
-                <li class="item">
-                        <div class="product-info">
-                              Book EFG
-                            <span class="label label-warning pull-right">$1800</span>
-                            <span class="product-description"> Publisher Name: PUB2 </span>
-                        </div>
-                </li>
-                <!-- /.item -->
-                <li class="item">
-                        <div class="product-info">
-                              Book EFG
-                            <span class="label label-warning pull-right">$1800</span>
-                            <span class="product-description"> Publisher Name: PUB2 </span>
-                        </div>
-                    </li>
-                <!-- /.item -->
+                  </li>
+                  <!-- /.item -->
+                @endforeach                
               </ul>
             </div>
             <!-- /.box-body -->
@@ -112,38 +90,16 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                       <ul class="products-list product-list-in-box">
-                        <li class="item">
-                          <div class="product-info">
-                            Journal ABC
-                            <span class="label label-warning pull-right">$1800</span>
-                            <span class="product-description"> Publisher Name: PUB1 </span>
-                          </div>
-                        </li>
-                        <!-- /.item -->
-                        <li class="item">
+                          @foreach($data['recently_added_journals'] as $journals)
+                          <li class="item">
                             <div class="product-info">
-                                Journal EFG
-                                <span class="label label-warning pull-right">$1800</span>
-                                <span class="product-description"> Publisher Name: PUB2 </span>
+                              {{$journals['TITLE']}}
+                              <span class="label label-warning pull-right">{{$journals['ACCESSNO']}}</span>
+                              <span class="product-description"> Publisher Name: PUB1 </span>
                             </div>
-                        </li>
-                        <!-- /.item -->
-                        <li class="item">
-                                <div class="product-info">
-                                    Journal EFG
-                                    <span class="label label-warning pull-right">$1800</span>
-                                    <span class="product-description"> Publisher Name: PUB2 </span>
-                                </div>
-                        </li>
-                        <!-- /.item -->
-                        <li class="item">
-                                <div class="product-info">
-                                    Journal EFG
-                                    <span class="label label-warning pull-right">$1800</span>
-                                    <span class="product-description"> Publisher Name: PUB2 </span>
-                                </div>
-                            </li>
-                        <!-- /.item -->
+                          </li>
+                          <!-- /.item -->
+                        @endforeach   
                       </ul>
                     </div>
                     <!-- /.box-body -->
@@ -166,38 +122,16 @@
                             <!-- /.box-header -->
                             <div class="box-body">
                               <ul class="products-list product-list-in-box">
-                                <li class="item">
-                                  <div class="product-info">
-                                    Act ABC
-                                    <span class="label label-warning pull-right">$1800</span>
-                                    <span class="product-description"> Publisher Name: PUB1 </span>
-                                  </div>
-                                </li>
-                                <!-- /.item -->
-                                <li class="item">
+                                  @foreach($data['recently_added_acts'] as $acts)
+                                  <li class="item">
                                     <div class="product-info">
-                                        Act EFG
-                                        <span class="label label-warning pull-right">$1800</span>
-                                        <span class="product-description"> Publisher Name: PUB2 </span>
+                                      {{$acts['TITLE']}}
+                                      <span class="label label-warning pull-right">{{$acts['ACCESSNO']}}</span>
+                                      <span class="product-description"> Publisher Name: PUB1 </span>
                                     </div>
-                                </li>
-                                <!-- /.item -->
-                                <li class="item">
-                                        <div class="product-info">
-                                            Act EFG
-                                            <span class="label label-warning pull-right">$1800</span>
-                                            <span class="product-description"> Publisher Name: PUB2 </span>
-                                        </div>
-                                </li>
-                                <!-- /.item -->
-                                <li class="item">
-                                        <div class="product-info">
-                                            Act EFG
-                                            <span class="label label-warning pull-right">$1800</span>
-                                            <span class="product-description"> Publisher Name: PUB2 </span>
-                                        </div>
-                                    </li>
-                                <!-- /.item -->
+                                  </li>
+                                  <!-- /.item -->
+                                @endforeach   
                               </ul>
                             </div>
                             <!-- /.box-body -->

@@ -15,12 +15,7 @@ use Carbon\Carbon;
 
 class SearchController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
     
-    //
     public function index(){
         $data = array();
         $data['first_author_name'] = book::select('AUFNAME1','AUSNAME1')->distinct()->get();        
