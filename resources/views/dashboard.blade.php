@@ -60,11 +60,9 @@
               <ul class="products-list product-list-in-box">
                 @foreach($data['recently_added_books'] as $books)
                   <li class="item">
-                    <div class="product-info">
                       {{$books['TITLE']}}
                       <span class="label label-warning pull-right">{{$books['ACCESSNO']}}</span>
-                      <span class="product-description"> Publisher Name: PUB1 </span>
-                    </div>
+                      <span class="product-description"> Publisher Name: {{$books['PUBNAME']}} </span>
                   </li>
                   <!-- /.item -->
                 @endforeach                
@@ -92,11 +90,9 @@
                       <ul class="products-list product-list-in-box">
                           @foreach($data['recently_added_journals'] as $journals)
                           <li class="item">
-                            <div class="product-info">
                               {{$journals['TITLE']}}
                               <span class="label label-warning pull-right">{{$journals['ACCESSNO']}}</span>
-                              <span class="product-description"> Publisher Name: PUB1 </span>
-                            </div>
+                              <span class="product-description"> Publisher Name: {{$journals['PUBNAME']}} </span>
                           </li>
                           <!-- /.item -->
                         @endforeach   
@@ -124,11 +120,9 @@
                               <ul class="products-list product-list-in-box">
                                   @foreach($data['recently_added_acts'] as $acts)
                                   <li class="item">
-                                    <div class="product-info">
                                       {{$acts['TITLE']}}
                                       <span class="label label-warning pull-right">{{$acts['ACCESSNO']}}</span>
-                                      <span class="product-description"> Publisher Name: PUB1 </span>
-                                    </div>
+                                      <span class="product-description"> Publisher Name: {{$acts['PUBNAME']}}</span>
                                   </li>
                                   <!-- /.item -->
                                 @endforeach   
