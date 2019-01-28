@@ -14,31 +14,35 @@
         <!-- /.info-box -->
     </div>
 
+    <a href="issue_today">
     <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box bg-green">
                 <span class="info-box-icon"><i class="ion ion-arrow-return-right" style="margin-top:20px"></i></span>
     
                 <div class="info-box-content">
-                  <span class="info-box-text"><strong>Issued Book On Today</strong></span>                  
+                  <span class="info-box-text"><strong>Issued On Today</strong></span>                  
                   <span class="info-box-number">{{$data['issue_count']}}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
     </div>
+    </a>
 
+    <a href="return_today">
     <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box bg-red">
                 <span class="info-box-icon"><i class="ion ion-arrow-return-left" style="margin-top:20px"></i></span>
     
                 <div class="info-box-content">
-                  <span class="info-box-text"><strong>Returned Book On Today</strong></span>
+                  <span class="info-box-text"><strong>Returned On Today</strong></span>
                   <span class="info-box-number">{{$data['receive_count']}}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
     </div>
+  </a>
 
 </div>
 

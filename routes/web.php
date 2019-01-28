@@ -25,6 +25,10 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/home', 'HomeController@index')->name('home');
 
       Route::get('dashboard', 'DashboardController@show');
+      
+      Route::get('issue_today','DashboardController@issue_today');
+
+      Route::get('return_today','DashboardController@return_today');
 
       Route::get('search', 'SearchController@index');
 
