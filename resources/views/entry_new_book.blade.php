@@ -186,7 +186,7 @@
                 <div class="col-md-2">
                     <label>Reference</label>
                     <select class="form-control select2" name="reference" id="reference">
-                        <option value="NULL">Select One Option. . . </option>
+                        <option value="">Select One Option. . . </option>
                         @foreach($data['subject_data'] as $data3)
                         <option value="{{$data3['SUBNO']}}">{{$data3['SUBNAME']}}</option>
                         @endforeach
@@ -256,7 +256,7 @@
                     var location = $("#location option:selected").val();
                     var subject = $("#subject option:selected").val();
                     var reference = $("#reference option:selected").val();
-                    var content = $("#content").val();
+                    var content = $("#content").text();
 
                     $.ajax({
                         type: "POST",
