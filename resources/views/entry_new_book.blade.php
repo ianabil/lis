@@ -19,7 +19,7 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3" id="existing_title_div">
+                <div class="col-md-2" id="existing_title_div">
                     <div class="form-group required">
                         <label class="control-label">Title</label>
                         <br>
@@ -34,13 +34,13 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3 form-group required" style="display:none" id="new_title_div">
+                <div class="col-md-2 form-group required" style="display:none" id="new_title_div">
                     <label class="control-label">Title</label>
                     <input type="text" class="form-control" name="new_title" id="title_new">
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3 form-group required">
+                <div class="col-md-2 form-group required">
                     <label class="control-label"> Type</label>
                     <select class="form-control select2" name="type" id="type">
                         <option value="">Select One Option. . . </option>

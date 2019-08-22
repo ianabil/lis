@@ -18,9 +18,21 @@ class DashboardController extends Controller
         $data['last_accession_no'] = book::max('ACCESSNO'); // Last Accession No.
         $data['issue_count'] = ir::where('DTISS', Carbon::now())->count('ACCESSNO'); // Total No. of issued book on today
         $data['receive_count'] = ir::where('DTREC', Carbon::now())->count('ACCESSNO');  // Total No. of returned book on today
-        $data['recently_added_books'] = book::leftjoin('publishes','books.PUBCODE', '=', 'publishes.PUBCODE')->where('TYPE','B')->orderBy('books.ACCESSNO','DESC')->limit(5)->get(); // Recently added books
-        $data['recently_added_journals'] = book::leftjoin('publishes','books.PUBCODE', '=', 'publishes.PUBCODE')->where('TYPE','J')->orderBy('books.ACCESSNO','DESC')->limit(5)->get(); // Recently added journals
-        $data['recently_added_acts'] = book::leftjoin('publishes','books.PUBCODE', '=', 'publishes.PUBCODE')->where('TYPE','A')->orderBy('books.ACCESSNO','DESC')->limit(5)->get(); // Recently added acts
+        $data['recently_added_books'] = book::leftjoin('publishes','books.PUBCODE', '=', 'publishes.PUBCODE')
+                                        ->where('TYPE','B')
+                                        ->orderBy('books.ACCESSNO','DESC')
+                                        ->limit(5)
+                                        ->get(); // Recently added books
+        $data['recently_added_journals'] = book::leftjoin('publishes','books.PUBCODE', '=', 'publishes.PUBCODE')
+                                            ->where('TYPE','J')
+                                            ->orderBy('books.ACCESSNO','DESC')
+                                            ->limit(5)
+                                            ->get(); // Recently added journals
+        $data['recently_added_acts'] = book::leftjoin('publishes','books.PUBCODE', '=', 'publishes.PUBCODE')
+                                            ->where('TYPE','A')
+                                            ->orderBy('books.ACCESSNO','DESC')
+                                            ->limit(5)
+                                            ->get(); // Recently added acts
 
         return view('dashboard', compact('data'));
     }

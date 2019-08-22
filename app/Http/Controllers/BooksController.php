@@ -145,12 +145,7 @@ class BooksController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {        
         $data = array();
@@ -187,24 +182,8 @@ class BooksController extends Controller
         echo json_encode($data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
+    
     public function update(Request $request, $id)
     {
         $this->validate ($request, [ 
@@ -244,7 +223,7 @@ class BooksController extends Controller
             $user_id = Auth::user()->user_id;
     
         
-        //echo json_encode($data);
+        
         book::where('ACCESSNO',$accession_no)
             ->update(['LIBNO'=>$library_no,
                      'TIT_CODE'=>$title_code,
@@ -274,21 +253,11 @@ class BooksController extends Controller
 
         
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 
     public function get_data()
     {
-        //
+       
         $data = array();
         $data['publishers_data'] = publish::get();
         $data['location_data'] = loca::get();
@@ -301,7 +270,7 @@ class BooksController extends Controller
 
     public function get_data_for_update_book()
     {
-        //
+        
         $data = array();
         $data['publishers_data'] = publish::get();
         $data['location_data'] = loca::get();
