@@ -5,9 +5,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="Judges Library Information System">
+    <meta name="Developers" content="Anabil Bhattacharya, Arpan Kr. Roy">
     <title>LIS, Calcutta High Court</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> @include('layouts.css_links')
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> 
+    @include('layouts.css_links')
 
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
@@ -92,17 +95,7 @@
                                 <li><a href="marked_for_discarded_book"><i class="fa fa-circle-o text-purple"></i> <span>Discard Book / Journal</span></a></li>
                             </ul>
                         </li>
-
-                        <li class="header"></li>
-                        <li class="treeview">
-                            <a href="#"><i class="fa fa-search-minus"></i>
-                                <span>Enquiry / Reports</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="upload_koha_report">Upload Koha Report</a></li>
-                                <li><a href="upload_catalogue">Upload Catalogue Data</a></li>
-                            </ul>
-                        </li>
+                        
                     @endif
                 </ul>
             </section>
@@ -119,5 +112,7 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
+        
+        @include('layouts.footer')
 
         @include('layouts.js_links')
