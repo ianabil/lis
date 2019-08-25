@@ -34,13 +34,13 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-2 form-group required" style="display:none" id="new_title_div">
+                <div class="col-md-3 form-group required" style="display:none" id="new_title_div">
                     <label class="control-label">Title</label>
-                    <input type="text" class="form-control" name="new_title" id="title_new">
+                    <input type="text" class="form-control" placeholder="Type the Title Name" name="new_title" id="title_new">
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-2 form-group required">
+                <div class="col-md-3 form-group required">
                     <label class="control-label"> Type</label>
                     <select class="form-control select2" name="type" id="type">
                         <option value="">Select One Option. . . </option>
@@ -52,7 +52,7 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3 form-group">
+                <div class="col-md-2 form-group">
                     <label class="control-label">Content</label>
                     <textarea class="form-control" id="content" rows="3"></textarea>
                 </div>
@@ -123,34 +123,45 @@
 
                 <div class="col-md-2 form-group required">
                     <label class="control-label">Entry Date</label>
-                <input type="text" class="form-control date" placeholder="DD/MM/YYYY" name="entry_date" id="entry_date" autocomplete="off" data-provide="datepicker-inline" value="{{date('d-m-Y')}}">
+                    <input type="text" class="form-control date" placeholder="DD/MM/YYYY" name="entry_date" id="entry_date" autocomplete="off" data-provide="datepicker-inline" value="{{date('d-m-Y')}}">
                 </div>
-                <!-- /.col -->
-
+                <!-- /.col -->                
                 <div class="col-md-2">
-                    <label>Author's First Name</label>
-                    <input type="text" class="form-control" name="first_name" id="first_name">
+                    <label>Editor</label>
+                    <input type="text" class="form-control" name="editor" id="editor">
                 </div>
-                <!-- /.col -->
-
-                <div class="col-md-2">
-                    <label>Author's Last Name</label>
-                    <input type="text" class="form-control" name="last_name" id="last_name">
-                </div>
-                <!-- /.col -->
+                <!-- /.col -->                
             </div>
             <!-- /.row -->
 
             <hr>
 
-            <div class="row">
-
-                <div class="col-md-2">
-                    <label>Editor</label>
-                    <input type="text" class="form-control" name="editor" id="editor">
+            <div class="row form-group required">                
+                <div class="col-md-3">
+                    <label class="control-label">First Author's First Name</label>
+                    <input type="text" class="form-control" name="auth1_first_name" id="auth1_first_name">
                 </div>
                 <!-- /.col -->
+                <div class="col-md-3">
+                    <label class="control-label">First Author's Last Name</label>
+                    <input type="text" class="form-control" name="auth1_last_name" id="auth1_last_name">
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 from-group">
+                    <label>Second Author's First Name</label>
+                    <input type="text" class="form-control" name="auth2_first_name" id="auth2_first_name">
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 from-group">
+                    <label>Second Author's Last Name</label>
+                    <input type="text" class="form-control" name="auth2_last_name" id="auth2_last_name">
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <hr>
 
+            <div class="row">                
                 <div class="col-md-3 form-group required">
                     <label class="control-label">Publisher</label>
                     <select class="form-control select2" name="publisher" id="publisher">
@@ -215,7 +226,8 @@
         $(document).ready(function() {
             $(".date").datepicker({
                 endDate:'0',
-                format: 'dd-mm-yyyy'
+                format: 'dd-mm-yyyy',
+                autoClose:true
             }); // Date picker initialization
             
             $(".select2").select2({width: '100%'}); // Select-2 initialization
@@ -229,7 +241,6 @@
                 if(title_code=='other'){
                     flag = 'new_title';
                     $("#new_title_div").show();
-                    $("#existing_title_div").hide();
                 }
             })
 
@@ -290,28 +301,7 @@
                         },
                         success: function(response) {
                             var obj = $.parseJSON(response);
-                            console.log(obj);
-                            swal("Book Inserted Successfully", "Accession No. "+obj['accession_no'], "success");
-                            if(obj['title_code']!='NA'){
-                                var data = {
-                                    id: obj['title_code'],
-                                    text: $("#title_new").val()
-                                };
-
-                                var newOption = new Option(data.text, data.id, true, true);
-                                $('#title').append(newOption).trigger('change');
-                                flag='existing_title';
-                            }
-                            else{
-                                $('#title').val('');
-                                $('#title').trigger('change');
-                            }
-                            
-                             $("#library_no").val('');
-                             $("#copy_no").val('');
-                             $("#new_title_div").hide();
-                             $("#existing_title_div").show();
-                             $("#title_new").val('');                            
+                            swal("Book Inserted Successfully", "Accession No. "+obj['accession_no'], "success");                            
                         },
                         error: function(response) {
                             if(response.responseJSON.errors.hasOwnProperty('subject'))
