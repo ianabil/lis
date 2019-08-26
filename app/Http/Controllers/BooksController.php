@@ -19,19 +19,30 @@ class BooksController extends Controller
     {
         $this->validate ($request, [ 
             'library_no' => 'required|max:255', 
-            'title_code' => 'required|max:10', 
+            'title_code' => 'required', 
+            'new_title' => 'nullable|max:100',
+            'first_author_first_name' => 'required|max:50',
+            'first_author_last_name' => 'required|max:50',
             'type' => 'required|max:255',
-            'publisher' => 'required|max:255',
-            'subject' => 'required|max:255',
-            'entry_date' => 'required|max:255'
+            'publisher' => 'required|exists:publishes,PUBCODE',
+            'subject' => 'required|exists:subjs,SUBNO',
+            'entry_date' => 'required|date',
+            'purchase_date' => 'nullable|date',
+            'edition_year_1' => 'nullable|integer',
+            'edition_year_2' => 'nullable|integer',
+            'price' => 'nullable|integer',
+            'edition_no' => 'nullable|integer',
+            'total_page' => 'nullable|integer',
+            'price' => 'nullable|between:0,999999.99',
+            'copy_no' => 'nullable|integer'
         ]); 
         
             $accessno = 1+ book::max('ACCESSNO'); 
-            $libno = strtoupper($request->input('library_no')); 
+            $libno = strtoupper(trim($request->input('library_no'))); 
             $tit_code = $request->input('title_code');
-            $new_title = strtoupper($request->input('new_title'));
+            $new_title = strtoupper(trim($request->input('new_title')));
             $flag = $request->input('flag');
-            $title = strtoupper($request->input('title'));
+            $title = strtoupper(trim($request->input('title')));
             $type = $request->input('type'); 
             $volno = $request->input('volume_no');
             $partno = $request->input('part_no'); 

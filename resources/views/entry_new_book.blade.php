@@ -2,7 +2,7 @@
 <!-- Main content -->
 <div class="box box-default">
     <div class="box-header with-border">
-        <h3 class="box-title">Book / Journal / Bare Act Entry</h3>
+        <h3 class="box-title">Book / Journal / Bare Act / Periodical Entry</h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -19,7 +19,7 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-2" id="existing_title_div">
+                <div class="col-md-3" id="existing_title_div">
                     <div class="form-group required">
                         <label class="control-label">Title</label>
                         <br>
@@ -40,7 +40,7 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3 form-group required">
+                <div class="col-md-2 form-group required">
                     <label class="control-label"> Type</label>
                     <select class="form-control select2" name="type" id="type">
                         <option value="">Select One Option. . . </option>
@@ -227,10 +227,13 @@
             $(".date").datepicker({
                 endDate:'0',
                 format: 'dd-mm-yyyy',
-                autoClose:true
             }); // Date picker initialization
             
-            $(".select2").select2({width: '100%'}); // Select-2 initialization
+            $(".select2").select2(
+                {
+                    width: '100%'
+                }
+            ); // Select-2 initialization
 
             var flag='existing_title'; // Global variable for title
 
@@ -241,6 +244,11 @@
                 if(title_code=='other'){
                     flag = 'new_title';
                     $("#new_title_div").show();
+                }
+                else
+                {
+                    flag='existing_title';
+                    $("#new_title_div").hide();
                 }
             })
 
@@ -257,8 +265,10 @@
                     var total_page = $("#total_page").val();
                     var price = $("#price").val();
                     var copy_no = $("#copy_no").val();
-                    var first_name = $("#first_name").val();
-                    var last_name = $("#last_name").val();
+                    var auth1_first_name = $("#auth1_first_name").val();
+                    var auth1_last_name = $("#auth1_last_name").val();
+                    var auth2_first_name = $("#auth2_first_name").val();
+                    var auth2_last_name = $("#auth2_last_name").val();
                     var editor = $("#editor").val();
                     var purchase_date = $("#purchase_date").val();
                     var entry_date = $("#entry_date").val();
@@ -287,8 +297,10 @@
                             total_page: total_page,
                             price: price,
                             copy_no: copy_no,
-                            first_name: first_name,
-                            last_name: last_name,
+                            first_author_first_name: auth1_first_name,
+                            first_author_last_name: auth1_last_name,
+                            second_author_first_name: auth2_first_name,
+                            second_author_last_name: auth2_last_name,
                             editor: editor,
                             purchase_date: purchase_date,
                             entry_date: entry_date,
