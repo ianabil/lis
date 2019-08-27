@@ -22,8 +22,8 @@
 
             <div class="col-md-1">
                 <div class="form-group">
-                    <label>&nbsp;</label>
-                    <button type="button" class="form-control btn btn-success" name="get_data" id="get_data">GET
+                    <label>&nbsp</label><br>
+                    <button type="button" class="btn btn-success" name="get_data" id="get_data">GET
                 </div>
             </div>
             <!-- /.col -->
@@ -42,29 +42,39 @@
 <hr>
 
 <div id="data" style="display:none">
-
- <div class="row">
+            <div class="row">
                 <!-- /.col -->
-                <div class="col-md-3">                       
-                    <label>Library No.</label>
-                    <input type="text" class="form-control" name="library_no" id="library_no" disabled>            
-                </div>
-                <!-- /.col -->
-
-
-                 <div class="col-md-6">
-                    <label>Title</label>
-                    <input type="text" class="form-control" name="title" id="title" placeholder="Book Title" disabled>
-                </div>
-                <!-- /.col -->
-
                 <div class="col-md-2">
+                    <label>Library No.</label>
+                    <input type="text" class="form-control" name="library_no" id="library_no" placeholder="Not Available" disabled="disabled">
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-3">
+                    <label>Title</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Not Available" disabled="disabled">
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-3">
+                    <label>First Author</label>
+                    <input type="text" class="form-control" name="auth1" id="auth1" placeholder="Not Available" disabled="disabled">
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-3">
+                    <label>Second Author</label>
+                    <input type="text" class="form-control" name="auth2" id="auth2" placeholder="Not Available" disabled="disabled">
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-1">
                     <label>Type</label>
                     <input type="text" class="form-control" name="type" id="type" placeholder="Not Available" disabled="disabled">
                 </div>
                 <!-- /.col -->
             </div>
-        <br>
+                <br>
             <div class="row">
                 <div class="col-md-2">
                     <label>Volume No</label>
@@ -177,7 +187,7 @@
 
         <div class="row">
 
-                <div class="col-md-6">         
+                <div class="col-md-5">         
                     <label>Member Name</label>
                     <input type="text" class="form-control" name="member_name" id="member_name" placeholder="Mr./Ms." disabled>
                     <input type="text" class="form-control" name="member_code" id="member_code" style="display:none">                                        
@@ -195,14 +205,6 @@
                     <input type="text" class="form-control date" name="date_of_receipt" id="date_of_receipt" value="{{date('d-m-Y')}}">
                 </div>
                 <!-- /.col -->
-
-
-                <!--<div class="col-md-2">  
-                    <label>&nbsp;</label>
-                    <button type="button"  class="form-control btn-danger " name="return" id="return">Return Book
-                </div>
-                -->       
- 
         </div>
         <!-- /.row -->
 
@@ -225,19 +227,19 @@
      <!--loader starts-->
 
             <div class="col-md-offset-5 col-md-3" id="wait" style="display:none;">
-                    <img src='images/09b24e31234507.564a1d23c07b4.gif'width="15%" height="5%" />
-                        <br>Loading..
+                <img src='images/09b24e31234507.564a1d23c07b4.gif'width="15%" height="5%" />
+                <br>Loading..
             </div>
    
    <!--loader ends-->
 
-    @endsection
+   
 
     <script src="{{asset('js/jquery/jquery.min.js')}}"></script>
 
     <script>
         $(document).ready(function(){
-            $( ".date").datepicker({ dateFormat: 'dd-mm-yy', maxDate:0}); // Date picker initialization
+            $( ".date").datepicker({ format: 'dd-mm-yyyy', endDate:'0'}); // Date picker initialization
 
      /* Variable decleration start*/
 
@@ -279,12 +281,12 @@
                 $.ajax({
                     type: "POST",
                     url:"get_data_to_return", 
-                    data: {_token: $('meta[name="csrf-token"]').attr('content'),
-                        accession_no: accession_no},
-
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        accession_no: accession_no
+                    },
                     success:function(response){
                         var obj = $.parseJSON(response);
-                        //console.log(obj);
 
                         if(obj['result']=="invald_accessno")
                         {
@@ -301,8 +303,6 @@
                         }
                         else if(obj['result']=="can_be_returned")
                         {
-                        
-                            //console.log(response);
                             $("#report").html('');
 
                             $("#library_no").val(obj['books']['0'].LIBNO);
@@ -336,6 +336,9 @@
                             $("#editor").val(obj['books']['0'].EDINAME);
                             $("#subject").val(obj['books']['0'].SUB1);
                             $("#reference").val(obj['books']['0'].SUB2);
+                            $("#auth1").val(obj['books']['0'].AUFNAME1+' '+obj['books']['0'].AUSNAME1);
+                            $("#auth2").val(obj['books']['0'].AUFNAME2+' '+obj['books']['0'].AUSNAME2);
+
 
 
                             $("#member_name").val($.trim(obj['issued_to']['0'].UFNAME)+"  "+ $.trim(obj['issued_to']['0'].USNAME));
@@ -401,7 +404,4 @@
         });
         
     </script>
-
-    </body>
-
-    </html>
+ @endsection

@@ -30,7 +30,6 @@ class BooksController extends Controller
             'purchase_date' => 'nullable|date',
             'edition_year_1' => 'nullable|integer',
             'edition_year_2' => 'nullable|integer',
-            'price' => 'nullable|integer',
             'edition_no' => 'nullable|integer',
             'total_page' => 'nullable|integer',
             'price' => 'nullable|between:0,999999.99',
@@ -47,32 +46,54 @@ class BooksController extends Controller
             $volno = $request->input('volume_no');
             $partno = $request->input('part_no'); 
             $edeno = $request->input('edition_no');
+            if($edeno=="")
+                $edeno = null;
             $year = $request->input('edition_year_1'); 
+            if($year=="")
+                $year = null;
             $year1 = $request->input('edition_year_2');
+            if($year1=="")
+                $year1 = null;
             $page = $request->input('total_page');
+            if($page=="")
+                $page = null;
             $price = $request->input('price');
-            $ausname1 = strtoupper($request->input('last_name_1'));
-            $aufname1 = strtoupper($request->input('first_name_1'));
+            if($price=="")
+                $price = null;
+            $ausname1 = trim(strtoupper($request->input('first_author_last_name')));
+            $aufname1 = trim(strtoupper($request->input('first_author_first_name')));
+            $ausname2 = trim(strtoupper($request->input('second_author_last_name')));
+            $aufname2 = trim(strtoupper($request->input('second_author_first_name')));
             $pubcode = $request->input('publisher');
             $ediname = strtoupper($request->input('editor'));
             $dtpur = Carbon::parse($request->input('purchase_date'))->format('Y-m-d');
             $sub1 = $request->input('subject');
             $reference = $request->input('reference');
             $locno = strtoupper($request->input('location'));
+            if($locno=="")
+                $locno=null;
             $copy_no = $request->input('copy_no');
+            if($copy_no=="")
+                $copy_no = null;
             $content = strtoupper($request->input('content'));
             $entry_date = Carbon::parse($request->input('entry_date'))->format('Y-m-d');
             $update_date = Carbon::today();  
             $uploaded_date = Carbon::today();  
             $user_id = Auth::user()->user_id;
-            $issue_flag ='';
+            $issue_flag = null;
 
             if($flag=='new_title'){
-                $count = title::where('TIT_DESC',$new_title)->count('TIT_CODE'); 
+                $count = title::where('TIT_DESC','ilike',$new_title)->count(); 
                 
                 if($count<1)
                 {                              
-                    title::insert(['TIT_DESC'=>$new_title, 'UPLOAD_ON'=>$uploaded_date, 'MODIFIED_ON'=>$update_date, 'USR_ID'=>$user_id]); 
+                    title::insert([
+                        'TIT_DESC'=>$new_title, 
+                        'UPLOAD_ON'=>$uploaded_date, 
+                        'MODIFIED_ON'=>$update_date, 
+                        'USR_ID'=>$user_id
+                    ]); 
+
                     $tit_code = title::max('TIT_CODE');
                     $title = $new_title;
                 }
@@ -84,8 +105,8 @@ class BooksController extends Controller
             }
 
 
-            book::insert(
-                ['ACCESSNO'=>$accessno,
+            book::insert([
+                'ACCESSNO'=>$accessno,
                  'LIBNO'=>$libno,
                  'TIT_CODE'=>$tit_code,
                  'TITLE'=>$title,
@@ -99,6 +120,8 @@ class BooksController extends Controller
                  'PRICE'=>$price,
                  'AUSNAME1'=>$ausname1,
                  'AUFNAME1'=>$aufname1,
+                 'AUSNAME2'=>$ausname2,
+                 'AUFNAME2'=>$aufname2,
                  'PUBCODE'=>$pubcode,
                  'EDINAME'=>$ediname,
                  'DTPUR'=>$dtpur,
@@ -112,23 +135,12 @@ class BooksController extends Controller
                  'MODIFIED_ON'=>$update_date,
                  'UPLOAD_ON'=>$uploaded_date,
                  'USR_ID'=>$user_id
-                 ]
-            );
+            ]);
 
-            if($flag=='new_title'){
-                $data = array();
-                $data['title_code'] = $tit_code;
-                $data['accession_no'] = $accessno;
-                echo json_encode($data);
-            }
-            else{
-                $data = array();
-                $data['title_code'] ='NA';
-                $data['accession_no'] = $accessno;
-                echo json_encode($data);
-            }
-       
-
+            
+        $data['accession_no'] = $accessno;
+        echo json_encode($data);
+            
     }
 
     
@@ -137,34 +149,8 @@ class BooksController extends Controller
         $data = array();
         
         $data['book'] = book::where('ACCESSNO',$id)->get();
-        $data['book_count'] = count($data['book']);
+        $data['book_count'] = count($data['book']);        
         
-        $data['publisher'] = book::
-                            join('publishes','books.PUBCODE', '=', 'publishes.PUBCODE')
-                            ->where('ACCESSNO',$id)
-                            ->get();
-        $data['publisher_count'] = count($data['publisher']);
-
-        $data['location'] = book::
-                            join('locas','books.LOCNO', '=', 'locas.LOCCD')
-                            ->where('ACCESSNO',$id)
-                            ->get();
-        $data['location_count'] = count($data['location']);
-
-        $data['subject'] =  book::
-                            join('subjs','books.SUB1', '=', 'subjs.SUBNO')
-                            ->where('ACCESSNO',$id)
-                            ->get();
-
-        $data['subject_count'] = count($data['subject']);
-
-        $data['reference'] =  book::
-                            join('subjs','books.SUB2', '=', 'subjs.SUBNO')
-                            ->where('ACCESSNO',$id)
-                            ->get();
-
-        $data['reference_count'] = count($data['reference']);
-
         echo json_encode($data);
     }
 
@@ -173,70 +159,109 @@ class BooksController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate ($request, [ 
-            'accession_no' => 'required|max:7',
+            'accession_no' => 'required|exists:books,ACCESSNO',
             'library_no' => 'required|max:255', 
-            'title_code' => 'required', 
+            'title_code' => 'nullable|exists:titles,TIT_CODE', 
+            'new_title' => 'nullable|max:100',
+            'first_author_first_name' => 'required|max:50',
+            'first_author_last_name' => 'required|max:50',
             'type' => 'required|max:255',
-            'publisher' => 'required|max:255',
-            'subject' => 'required|max:255',
-            'entry_date' => 'required|max:255'    
+            'publisher' => 'required|exists:publishes,PUBCODE',
+            'subject' => 'required|exists:subjs,SUBNO',
+            'entry_date' => 'required|date',
+            'purchase_date' => 'nullable|date',
+            'edition_year_1' => 'nullable|integer',
+            'edition_year_2' => 'nullable|integer',
+            'edition_no' => 'nullable|integer',
+            'total_page' => 'nullable|integer',
+            'price' => 'nullable|between:0,999999.99',
+            'copy_no' => 'nullable|integer'
         ]); 
 
             $accession_no = $request->input('accession_no');
-            $library_no = strtoupper($request->input('library_no'));
-            $title_code = $request->input('title_code');
-            $title = strtoupper($request->input('title'));
-            $type = $request->input('type');
-            $volume_no = $request->input('volume_no');
-            $part_no = $request->input('part_no');
-            $edition_no = $request->input('edition_no');
-            $edition_year_1 = $request->input('edition_year_1');
-            $edition_year_2 = $request->input('edition_year_2');
-            $total_page = $request->input('total_page');
+            $libno = strtoupper(trim($request->input('library_no'))); 
+            $tit_code = $request->input('title_code');
+            $title = strtoupper(trim($request->input('title')));
+            $type = $request->input('type'); 
+            $volno = $request->input('volume_no');
+            $partno = $request->input('part_no'); 
+            $edeno = $request->input('edition_no');
+            if($edeno=="")
+                $edeno = null;
+            $year = $request->input('edition_year_1'); 
+            if($year=="")
+                $year = null;
+            $year1 = $request->input('edition_year_2');
+            if($year1=="")
+                $year1 = null;
+            $page = $request->input('total_page');
+            if($page=="")
+                $page = null;
             $price = $request->input('price');
-            $last_name = strtoupper($request->input('last_name'));
-            $first_name = strtoupper($request->input('first_name'));
-            $publisher = $request->input('publisher');
-            $editor = strtoupper($request->input('editor'));
-            $purchase_date = Carbon::parse($request->input('purchase_date'))->format('Y-m-d');
-            $subject = $request->input('subject');
+            if($price=="")
+                $price = null;
+            $ausname1 = trim(strtoupper($request->input('first_author_last_name')));
+            $aufname1 = trim(strtoupper($request->input('first_author_first_name')));
+            $ausname2 = trim(strtoupper($request->input('second_author_last_name')));
+            $aufname2 = trim(strtoupper($request->input('second_author_first_name')));
+            $pubcode = $request->input('publisher');
+            $ediname = strtoupper($request->input('editor'));
+            $dtpur = Carbon::parse($request->input('purchase_date'))->format('Y-m-d');
+            $sub1 = $request->input('subject');
             $reference = $request->input('reference');
-            $location = $request->input('location');
+            $locno = strtoupper($request->input('location'));
+            if($locno=="")
+                $locno=null;
             $copy_no = $request->input('copy_no');
+            if($copy_no=="")
+                $copy_no = null;
             $content = strtoupper($request->input('content'));
-            $entry_date = $request->input('entry_date');
-            $update_date = Carbon::today();  
+            $entry_date = Carbon::parse($request->input('entry_date'))->format('Y-m-d');
+            $update_date = Carbon::today(); 
             $user_id = Auth::user()->user_id;
-    
-        
-        
-        book::where('ACCESSNO',$accession_no)
-            ->update(['LIBNO'=>$library_no,
-                     'TIT_CODE'=>$title_code,
-                     'TITLE'=>$title,
-                     'CONTENT'=>$content,
-                     'TYPE'=>$type,
-                     'VOLNO'=>$volume_no,
-                     'PARTNO'=>$part_no,
-                     'EDENO'=>$edition_no,
-                     'YEAR'=>$edition_year_1,
-                     'YEAR1'=>$edition_year_2,
-                     'PAGE'=>$total_page,
-                     'PRICE'=>$price,
-                     'AUSNAME1'=>$last_name,
-                     'AUFNAME1'=>$first_name,
-                     'PUBCODE'=>$publisher,
-                     'EDINAME'=>$editor,
-                     'DTPUR'=>$purchase_date,
-                     'SUB1'=>$subject,
-                     'SUB2'=>$reference,
-                     'LOCNO'=>$location,
-                     'COPY_NO'=>$copy_no,
-                     'ENTRY_DATE'=>$entry_date,
-                     'MODIFIED_ON'=>$update_date,
-                     'USR_ID'=>$user_id
-                     ]);
 
+
+            if($tit_code==""){                                            
+                title::insert([
+                    'TIT_DESC'=>$title, 
+                    'UPLOAD_ON'=>Carbon::today(), 
+                    'MODIFIED_ON'=>$update_date, 
+                    'USR_ID'=>$user_id
+                ]); 
+
+                $tit_code = title::max('TIT_CODE');
+            }
+                        
+
+        book::where('ACCESSNO',$accession_no)
+            ->update([
+                'LIBNO'=>$libno,
+                 'TIT_CODE'=>$tit_code,
+                 'TITLE'=>$title,
+                 'TYPE'=>$type,
+                 'VOLNO'=>$volno,
+                 'PARTNO'=>$partno,
+                 'EDENO'=>$edeno,
+                 'YEAR'=>$year,
+                 'YEAR1'=>$year1,
+                 'PAGE'=>$page,
+                 'PRICE'=>$price,
+                 'AUSNAME1'=>$ausname1,
+                 'AUFNAME1'=>$aufname1,
+                 'AUSNAME2'=>$ausname2,
+                 'AUFNAME2'=>$aufname2,
+                 'PUBCODE'=>$pubcode,
+                 'EDINAME'=>$ediname,
+                 'DTPUR'=>$dtpur,
+                 'SUB1'=>$sub1,
+                 'SUB2'=>$reference,
+                 'LOCNO'=>$locno,
+                 'COPY_NO'=>$copy_no,
+                 'CONTENT'=>$content,
+                 'ENTRY_DATE'=>$entry_date,
+                 'MODIFIED_ON'=>$update_date,
+                 'USR_ID'=>$user_id
+            ]);
         
     }
     

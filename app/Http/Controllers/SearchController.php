@@ -18,12 +18,26 @@ class SearchController extends Controller
     
     public function index(){
         $data = array();
-        $data['first_author_name'] = book::select('AUFNAME1','AUSNAME1')->distinct()->get();        
-        $data['second_author_name'] = book::select('AUFNAME2','AUSNAME2')->distinct()->get();
-        $data['book_title'] = title::select('TIT_CODE','TIT_DESC')->get();
-        $data['publisher'] = publish::select('PUBCODE','PUBNAME')->get();
-        $data['subject'] = subj::select('SUBNO','SUBNAME')->get();
-        $data['member'] = member::select('USERNO','UFNAME','USNAME')->get();
+        $data['first_author_name'] = book::select('AUFNAME1','AUSNAME1')
+                                            ->distinct()
+                                            ->orderBy('AUFNAME1')
+                                            ->get();        
+        $data['second_author_name'] = book::select('AUFNAME2','AUSNAME2')
+                                            ->distinct()
+                                            ->orderBy('AUFNAME2')
+                                            ->get();
+        $data['book_title'] = title::select('TIT_CODE','TIT_DESC')
+                                            ->orderBy('TIT_DESC')
+                                            ->get();
+        $data['publisher'] = publish::select('PUBCODE','PUBNAME')
+                                            ->orderBy('PUBNAME')
+                                            ->get();
+        $data['subject'] = subj::select('SUBNO','SUBNAME')        
+                                            ->orderBy('SUBNAME')
+                                            ->get();
+        $data['member'] = member::select('USERNO','UFNAME','USNAME')
+                                            ->orderBy('UFNAME')
+                                            ->get();
         
 
         return view('search',compact('data'));
@@ -42,26 +56,26 @@ class SearchController extends Controller
         $edition_year = $request->input('edition_year');
         $content = trim(strtoupper($request->input('content')));
         $issue_to_member = $request->input('issue_to_member'); 
-        $purchase_from_date = $request->input('purchase_from_date');
-        $purchase_to_date = $request->input('purchase_to_date');
+        $purchase_from_date = $request->input('purchase_from_date'); 
+        $purchase_to_date = $request->input('purchase_to_date'); 
         $issue_from_date = $request->input('issue_from_date'); 
-        $issue_to_date = $request->input('issue_to_date');
-        $entry_from_date = $request->input('entry_from_date');
-        $entry_to_date = $request->input('entry_to_date');
+        $issue_to_date = $request->input('issue_from_date'); 
+        $entry_from_date = $request->input('entry_from_date'); 
+        $entry_to_date = $request->input('entry_to_date'); 
         $order_by = $request->input('order_by'); 
         $order_type = $request->input('order_type');        
         /* Fetching values from view :: ENDS */
 
 
         // Default SELECT query
-        $select = 'SELECT DISTINCT "books"."ACCESSNO", "books"."TYPE", "books"."LIBNO", 
+        $select = 'SELECT "books"."ACCESSNO", "books"."TYPE", "books"."LIBNO", 
         "books"."TITLE", "publishes"."PUBNAME", "books"."AUFNAME1", "books"."AUFNAME2", 
         "books"."AUSNAME1", "books"."AUSNAME2", "books"."VOLNO", "books"."EDENO", 
         "books"."YEAR", "books"."PRICE", "books"."DTPUR", "books"."COPY_NO", "books"."CONTENT", "books"."ISSUE_FLAG"
         FROM books LEFT JOIN publishes ON "books"."PUBCODE" = "publishes"."PUBCODE"';
 
         // Default WHERE condition
-        $where = ' WHERE "books"."ISSUE_FLAG" IS NOT NULL';
+        $where = ' WHERE ("books"."ISSUE_FLAG" IS NOT NULL OR "books"."ISSUE_FLAG" IS NULL) ';
 
         // Default Order By query
         $orderBy = ' ORDER BY "books"."ACCESSNO"';
@@ -78,10 +92,10 @@ class SearchController extends Controller
             $where = $where.' AND "books"."ACCESSNO" ='.$accession_no;
 
         if($lib_no!="")
-            $where = $where.' AND "books"."LIBNO" LIKE '."'$lib_no'";
+            $where = $where.' AND "books"."LIBNO" ILIKE '."'$lib_no'";
 
         if($subject!="")
-           $where = $where.' AND "books"."SUB1" LIKE '."'$subject'".' OR "SUB2" LIKE '."'$subject'";
+           $where = $where.' AND ("books"."SUB1" = '."'$subject'".' OR "SUB2" = '."'$subject')";
 
         if($edition_no!="")
             $where = $where.' AND "books"."EDENO" = '.$edition_no;
@@ -90,7 +104,7 @@ class SearchController extends Controller
             $where = $where.' AND "books"."YEAR" = '.$edition_year;
 
         if($content!="")
-            $where = $where.' AND "books"."CONTENT" LIKE '."'%$content%'";
+            $where = $where.' AND "books"."CONTENT" ILIKE '."'%$content%'";
 
         if($purchase_from_date!="" && $purchase_to_date!="")
             $where = $where.' AND "books"."DTPUR" BETWEEN '."'$purchase_from_date'".' AND '."'$purchase_to_date'";
@@ -124,8 +138,9 @@ class SearchController extends Controller
             $f_name = $name[0];
             $s_name = $name[1];
 
-            $where = $where.' AND "books"."AUFNAME1" LIKE '."'$f_name'".' AND "books"."AUSNAME1" LIKE '."'$s_name'";
+            $where = $where.' AND "books"."AUFNAME1" ILIKE '."'$f_name'".' AND "books"."AUSNAME1" ILIKE '."'$s_name'";
         }
+    
        
         /* Building SELECT, WHERE, JOIN and ORDER BY clause of the sql query based on the 
         selected different options in the view :: ENDS */

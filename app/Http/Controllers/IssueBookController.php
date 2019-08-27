@@ -33,9 +33,9 @@ class IssueBookController extends Controller
 
     public function get_data_for_issue_book(Request $request)
     {
-        $this->validate ( $request, [ 
-            'id' => 'required|max:7'
-        ] ); 
+        $this->validate ($request, [ 
+            'id' => 'required|exists:books,ACCESSNO'
+        ]); 
 
         $id = $request->input('id');
         
@@ -47,7 +47,7 @@ class IssueBookController extends Controller
          $data['book']['0']['ENTRY_DATE']=Carbon::parse($data['book']['0']['ENTRY_DATE'])->format('d-m-Y');
 
 
-        if( count($data['book']) ==0 )
+        if(count($data['book']) ==0 )
         {
             $data['value']="Invalid Accession No.";
             $data['result']="invald_accessno";
@@ -65,7 +65,6 @@ class IssueBookController extends Controller
                   
         else
         {
-
         
             $data['publisher'] = book::
                                     leftjoin('publishes','books.PUBCODE','=','publishes.PUBCODE')
@@ -92,33 +91,33 @@ class IssueBookController extends Controller
 
     public function insert_data_issue_book(Request $request)
     {
-
+            $this->validate ( $request, [ 
+                'id' => 'required|exists:books,ACCESSNO'
+            ]); 
+            
             $accessno = $request->input('id'); 
             $member_name = $request->input('member_name');
             $date_of_issue = Carbon::parse($request->input('date_of_issue'))->format('Y-m-d');            
             $issue_flag="Y";
 
-
             $data= array();
 
-            ir::insert(
-                ['ACCESSNO'=>$accessno,
-                 'USERNO'=>$member_name,
-                 'REC_FLAG'=>"",
-                 'DTISS'=>$date_of_issue
-                 ]
-            );
+            ir::insert([
+                'ACCESSNO'=>$accessno,
+                'USERNO'=>$member_name,
+                'REC_FLAG'=>"",
+                'DTISS'=>$date_of_issue
+            ]);
 
             book::where('ACCESSNO',$accessno)
-                ->update(['ISSUE_FLAG'=>$issue_flag 
-                ]        
-            );
+                ->update([
+                    'ISSUE_FLAG'=>$issue_flag 
+                ]);
 
             $data['value']=$accessno;
             $data['result']="success";
 
             echo json_encode($data);
-            //return $data;
 
     }
 

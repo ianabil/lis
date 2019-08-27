@@ -21,8 +21,8 @@
 
             <div class="col-md-1">
                 <div class="form-group">
-                    <label>&nbsp</label>
-                    <button type="button" class="form-control btn btn-success" id="get_data">GET
+                    <label>&nbsp</label><br>
+                    <button type="button" class="btn btn-info" id="get_data">GET
                 </div>
             </div>
             <!-- /.col -->
@@ -30,7 +30,7 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <label>&nbsp</label>
-                    <button type="button" class="form-control btn btn-primary" id="reset" style="display: none">RESET
+                    <button type="button" class="btn btn-primary" id="reset" style="display: none">RESET
                 </div>
             </div>
             <!-- /.col -->
@@ -49,7 +49,7 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3">
+                <div class="col-md-3" id="existing_title_div">
                     <div class="form-group required">
                         <label class="control-label">Title</label>
                         <br>
@@ -63,7 +63,13 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3 form-group required">
+                <div class="col-md-3 form-group required" style="display:none" id="new_title_div">
+                    <label class="control-label">Title</label>
+                    <input type="text" class="form-control" placeholder="Type the Title Name" name="new_title" id="title_new">
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-2 form-group required">
                     <label class="control-label"> Type</label>
                     <select class="form-control select2" name="type" id="type">
                         <option value="">Select One Option. . . </option>
@@ -75,14 +81,15 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3 form-group">
+                <div class="col-md-2 form-group">
                     <label class="control-label">Content</label>
                     <textarea class="form-control" id="content" rows="3"></textarea>
                 </div>
 
             </div>
             <!-- /.row -->
-            
+           
+
             <div class="row">
                 <div class="col-md-2">
                     <label>Volume No.</label>
@@ -139,40 +146,51 @@
 
                 <div class="col-md-2">
                     <label>Purchase Date</label>
-                    <input type="text" class="form-control date" placeholder="DD/MM/YYYY" name="purchase_date" id="purchase_date" autocomplete="off">
+                    <input type="text" class="form-control date" placeholder="DD/MM/YYYY" name="purchase_date" id="purchase_date" autocomplete="off" data-provide="datepicker-inline">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-2 form-group required">
                     <label class="control-label">Entry Date</label>
-                    <input type="text" class="form-control date" placeholder="DD/MM/YYYY" name="entry_date" id="entry_date" autocomplete="off">
+                    <input type="text" class="form-control date" placeholder="DD/MM/YYYY" name="entry_date" id="entry_date" autocomplete="off" data-provide="datepicker-inline" value="{{date('d-m-Y')}}">
                 </div>
-                <!-- /.col -->
-
+                <!-- /.col -->                
                 <div class="col-md-2">
-                    <label>Author's First Name</label>
-                    <input type="text" class="form-control" name="first_name" id="first_name">
+                    <label>Editor</label>
+                    <input type="text" class="form-control" name="editor" id="editor">
                 </div>
-                <!-- /.col -->
-
-                <div class="col-md-2">
-                    <label>Author's Last Name</label>
-                    <input type="text" class="form-control" name="last_name" id="last_name">
-                </div>
-                <!-- /.col -->
+                <!-- /.col -->                
             </div>
             <!-- /.row -->
 
             <hr>
 
-            <div class="row">
-
-                <div class="col-md-2">
-                    <label>Editor</label>
-                    <input type="text" class="form-control" name="editor" id="editor">
+            <div class="row form-group required">                
+                <div class="col-md-3">
+                    <label class="control-label">First Author's First Name</label>
+                    <input type="text" class="form-control" name="auth1_first_name" id="auth1_first_name">
                 </div>
                 <!-- /.col -->
+                <div class="col-md-3">
+                    <label class="control-label">First Author's Last Name</label>
+                    <input type="text" class="form-control" name="auth1_last_name" id="auth1_last_name">
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 from-group">
+                    <label>Second Author's First Name</label>
+                    <input type="text" class="form-control" name="auth2_first_name" id="auth2_first_name">
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 from-group">
+                    <label>Second Author's Last Name</label>
+                    <input type="text" class="form-control" name="auth2_last_name" id="auth2_last_name">
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <hr>
 
+            <div class="row">                
                 <div class="col-md-3 form-group required">
                     <label class="control-label">Publisher</label>
                     <select class="form-control select2" name="publisher" id="publisher">
@@ -208,21 +226,20 @@
                 <div class="col-md-2">
                     <label>Reference</label>
                     <select class="form-control select2" name="reference" id="reference">
-                        <option value="NULL">Select One Option. . . </option>
+                        <option value="">Select One Option. . . </option>
                         @foreach($data['subject_data'] as $data3)
                         <option value="{{$data3['SUBNO']}}">{{$data3['SUBNAME']}}</option>
                         @endforeach
                     </select>
                 </div>
                 <!-- /.col -->
-
             </div>
             <!-- /.row -->
 
             <hr>
 
             <div class="row">
-                <div class="col-md-5"></div>
+                <div class="col-md-4"></div>
                 <div class="col-md-4">
                     <button type="button" class="form-control btn btn-success" id="update">UPDATE
                 </div>
@@ -256,11 +273,7 @@
 
             // To reset the page
             $(document).on("click", "#reset", function() {
-                $("#reset").hide();
-                $("#data").hide();
-                $("#get_data").show();
-                $("#access_no").val('').removeAttr('disabled');
-
+                location.reload('true');
             })
 
             // To fetch data
@@ -307,51 +320,46 @@
                             $("#editor").val(obj['book']['0'].EDINAME);
                             $("#purchase_date").val(obj['book']['0'].DTPUR);
                             $("#entry_date").val(obj['book']['0'].ENTRY_DATE);
-                        
+                            $("#auth1_first_name").val(obj['book']['0'].AUFNAME1);
+                            $("#auth1_last_name").val(obj['book']['0'].AUSNAME1);
+                            $("#auth2_first_name").val(obj['book']['0'].AUFNAME2);
+                            $("#auth2_last_name").val(obj['book']['0'].AUSNAME2);
+                            
+                            if(obj['book']['0'].TIT_CODE!=null){
+                                $("#title").val(obj['book']['0'].TIT_CODE);
+                                $("#title").trigger('change');
+                            }
+                            else{
+                                var option = '<option value="" selected>' + obj['book']['0'].TITLE;
+                                $("#title").prepend(option);
+                            }
 
-                            var option = "<option value=" + obj['book']['0'].TIT_CODE + " selected>" + obj['book']['0'].TITLE;
-                            $("#title").prepend(option);
+                            $("#type").val(obj['book']['0'].TYPE);
+                            $("#type").trigger('change');
 
-                            if (obj['book']['0'].TYPE == 'B')
-                                var option = "<option value=" + obj['book']['0'].TYPE + " selected>Book</option>";
-                            if (obj['book']['0'].TYPE == 'J')
-                                var option = "<option value=" + obj['book']['0'].TYPE + " selected>Journal</option>";
-                            if (obj['book']['0'].TYPE == 'A')
-                                var option = "<option value=" + obj['book']['0'].TYPE + " selected>Bare Act</option>";
-                            if (obj['book']['0'].TYPE == 'P')
-                                var option = "<option value=" + obj['book']['0'].TYPE + " selected>Periodical</option>";
+                            $("#publisher").val(obj['book']['0'].PUBCODE);
+                            $("#publisher").trigger('change');
 
-                            $("#type").prepend(option);
+                            if(obj['book']['0'].LOCCD != null){
+                                $("#location").val(obj['book']['0'].LOCCD);
+                                $("#location").trigger('change');
+                            }
 
-                        }
-                        if (obj['publisher_count'] != 0) 
-                        {
-                            var option = "<option value=" + obj['publisher']['0'].PUBCODE + " selected>" + obj['publisher']['0'].PUBNAME;
-                            $("#publisher").prepend(option);
-                        }
+                            $("#subject").val(obj['book']['0'].SUB1);
+                            $("#subject").trigger('change');
 
-                        if (obj['location_count'] != 0) 
-                        {
-                            var option = "<option value=" + obj['location']['0'].LOCCD + " selected>" + obj['location']['0'].LOCNAME;
-                            $("#location").prepend(option);
-                        }
+                            if (obj['book']['0'].SUB2 != null) 
+                            {
+                                $("#reference").val(obj['book']['0'].SUBNO);
+                                $("#reference").trigger('change');
+                            }
 
-                        if (obj['subject_count'] != 0) 
-                        {
-                            var option = "<option value=" + obj['subject']['0'].SUBNO + " selected>" + obj['subject']['0'].SUBNAME;
-                            $("#subject").prepend(option);                        
-                        }
-
-                        if (obj['reference_count'] != 0) 
-                        {
-                            var option = "<option value=" + obj['reference']['0'].SUBNO + " selected>" + obj['reference']['0'].SUBNAME;
-                            $("#reference").prepend(option);
                         }
 
                         $("#data").show();
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        swal("Invalid Accession No.", "", "error");
+                        swal("Server Error", "", "error");
                     }
                 })
 
@@ -362,6 +370,7 @@
                     var library_no = $("#library_no").val();
                     var title_code = $("#title option:selected").val();
                     var title = $("#title option:selected").text();
+                    var new_title = $("#title_new").val();
                     var volume_no = $("#volume_no").val();
                     var part_no = $("#part_no").val();
                     var edition_no = $("#edition_no").val();
@@ -370,8 +379,10 @@
                     var total_page = $("#total_page").val();
                     var price = $("#price").val();
                     var copy_no = $("#copy_no").val();
-                    var first_name = $("#first_name").val();
-                    var last_name = $("#last_name").val();
+                    var auth1_first_name = $("#auth1_first_name").val();
+                    var auth1_last_name = $("#auth1_last_name").val();
+                    var auth2_first_name = $("#auth2_first_name").val();
+                    var auth2_last_name = $("#auth2_last_name").val();
                     var editor = $("#editor").val();
                     var purchase_date = $("#purchase_date").val();
                     var entry_date = $("#entry_date").val();
@@ -380,7 +391,7 @@
                     var location = $("#location option:selected").val();
                     var subject = $("#subject option:selected").val();
                     var reference = $("#reference option:selected").val();
-                    var content = $("#content").val();
+                    var content = $("#content").text();
 
                     $.ajax({
                         type: "PUT",
@@ -399,8 +410,10 @@
                             total_page: total_page,
                             price: price,
                             copy_no: copy_no,
-                            first_name: first_name,
-                            last_name: last_name,
+                            first_author_first_name: auth1_first_name,
+                            first_author_last_name: auth1_last_name,
+                            second_author_first_name: auth2_first_name,
+                            second_author_last_name: auth2_last_name,
                             editor: editor,
                             purchase_date: purchase_date,
                             entry_date: entry_date,
@@ -415,19 +428,40 @@
                             swal("Book Updated Successfully", "", "success");
                         },
                         error: function(response) {
-
-                            if(response.responseJSON.errors.hasOwnProperty('library_no'))
-                                 swal("Cannot Update Book", "Library No. field can not be empty", "error");
-                            if(response.responseJSON.errors.hasOwnProperty('title_code'))
-                                 swal("Cannot Update Book", "Title field can not be empty", "error");
-                            if(response.responseJSON.errors.hasOwnProperty('type'))
-                                 swal("Cannot Update Book", "Book Type field can not be empty", "error");
-                            if(response.responseJSON.errors.hasOwnProperty('publisher'))
-                                 swal("Cannot Update Book", "Publisher Name field can not be empty", "error");
                             if(response.responseJSON.errors.hasOwnProperty('subject'))
-                                 swal("Cannot Update Book", "Subject field can not be empty", "error");
+                                 swal("Cannot Insert Book", response.responseJSON.errors.subject['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('publisher'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.publisher['0'], "error");                            
                             if(response.responseJSON.errors.hasOwnProperty('entry_date'))
-                                 swal("Cannot Update Book", "Book's Entry Date field can not be empty", "error");
+                                 swal("Cannot Insert Book", response.responseJSON.errors.entry_date['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('type'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.type['0'], "error");                                 
+                            if(response.responseJSON.errors.hasOwnProperty('title_code'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.title_code['0'], "error");                                 
+                            if(response.responseJSON.errors.hasOwnProperty('library_no'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.library_no['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('new_title'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.new_title['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('first_author_first_name'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.first_author_first_name['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('first_author_last_name'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.first_author_last_name['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('purchase_date'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.purchase_date['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('edition_year_1'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.edition_year_1['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('edition_year_2'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.edition_year_2['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('price'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.price['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('edition_no'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.edition_no['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('total_page'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.total_page['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('price'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.price['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('copy_no'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.copy_no['0'], "error");
                             
                         }
                     })

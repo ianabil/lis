@@ -17,8 +17,8 @@ class ReturnBookController extends Controller
     public function get_data_to_return_book(Request $request)
     {
         $this->validate ( $request, [ 
-            'accession_no' => 'required|max:7'
-        ] ); 
+            'accession_no' => 'required|exists:books,ACCESSNO'
+        ]); 
 
         $accession_no = $request->input('accession_no');
         $flag="Y";
@@ -30,7 +30,7 @@ class ReturnBookController extends Controller
         $data['books']['0']['ENTRY_DATE']=Carbon::parse($data['books']['0']['ENTRY_DATE'])->format('d-m-Y');
 
 
-        if( count($data['books']) ==0 )
+        if(count($data['books']) ==0 )
         {
             $data['value']="Invalid Accession No.";
             $data['result']="invald_accessno";
@@ -51,7 +51,7 @@ class ReturnBookController extends Controller
         {
             $data['issued_to']= ir::
                              join('books','irs.ACCESSNO', '=', 'books.ACCESSNO')
-                             -> join('members', 'irs.USERNO','=','members.USERNO')
+                             ->join('members', 'irs.USERNO','=','members.USERNO')
                              ->where([
                                  ['irs.ACCESSNO',$accession_no],
                                  ['irs.REC_FLAG','<>',$flag]
@@ -87,36 +87,32 @@ class ReturnBookController extends Controller
 
     public function update_receive_book_record(Request $request)
     {
+            $this->validate ( $request, [ 
+                'accession_no' => 'required|exists:books,ACCESSNO'
+            ]); 
+
             $accession_no = $request->input('accession_no');
             $member_code= $request->input('member_code');                       
-            $date_of_receipt= $request->input('date_of_receipt');              
+            $date_of_receipt= Carbon::parse($request->input('date_of_receipt'))->format('Y-m-d');
             $update_date = Carbon::today();    
             $flag="Y";         
             $usr_id=Auth::user()->user_id;
 
-
-//echo $accession_no.",".$member_code.",".$date_of_receipt  ;
                         
-            ir::where([
-                    ['irs.ACCESSNO',$accession_no],
-                    ['irs.USERNO',$member_code],
-                    ['irs.REC_FLAG','<>',$flag]
-                ])  
+            ir::where('irs.ACCESSNO',$accession_no)  
                 ->update([
                     'REC_FLAG'=> $flag,
                     'DTREC'=> $date_of_receipt,                    
                     'MODIFIED_ON'=>$update_date,
                     'USR_ID'=>$usr_id                 
-                    ]
-            );         
+                ]);         
  
             book::where('ACCESSNO',$accession_no)
                   ->update([
                         'ISSUE_FLAG'=> "", // *** in prevois version value is " " now it is ""
                         'MODIFIED_ON'=>$update_date,
                         'USR_ID'=>$usr_id                 
-                        ]
-            );         
+                    ]);         
 
             return 1;
     }                

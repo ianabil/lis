@@ -21,8 +21,8 @@
 
             <div class="col-md-1">
                 <div class="form-group">
-                    <label>&nbsp</label>
-                    <button type="button" class="form-control btn btn-success" id="get_data">GET
+                    <label>&nbsp</label><br>
+                    <button type="button" class="btn btn-success" id="get_data">GET
                 </div>
             </div>
             <!-- /.col -->
@@ -30,40 +30,50 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <label>&nbsp</label>
-                    <button type="button" class="form-control btn btn-primary" id="reset" style="display: none">RESET
+                    <button type="button" class="btn btn-primary" id="reset" style="display: none">RESET
                 </div>
             </div>
             <!-- /.col -->
 
             <div class="col-md-5">
                 <div class="form-group">
-                    <label>&nbsp</label>
-                    <br>
+                    <label>&nbsp</label><br>
                     <h4><span id="report" style="color:red;"></span></h4>
                 </div>
             </div>
             <!-- /.col -->
-
-        <!-- /.row -->
         </div>
+        <!-- /.row -->
         <hr>
 
         <div id="data" style="display:none">
             <div class="row">
                 <!-- /.col -->
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label>Library No.</label>
                     <input type="text" class="form-control" name="library_no" id="library_no" placeholder="Not Available" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-7">
+                <div class="col-md-3">
                     <label>Title</label>
                     <input type="text" class="form-control" name="title" id="title" placeholder="Not Available" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-2">
+                <div class="col-md-3">
+                    <label>First Author</label>
+                    <input type="text" class="form-control" name="auth1" id="auth1" placeholder="Not Available" disabled="disabled">
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-3">
+                    <label>Second Author</label>
+                    <input type="text" class="form-control" name="auth2" id="auth2" placeholder="Not Available" disabled="disabled">
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-1">
                     <label>Type</label>
                     <input type="text" class="form-control" name="type" id="type" placeholder="Not Available" disabled="disabled">
                 </div>
@@ -149,15 +159,12 @@
                     <label>Reference</label>
                     <input type="text" class="form-control" name="reference" id="reference" placeholder="Not Available" disabled="disabled">
                 </div>
-                <!-- /.col -->                
-                
-
+                <!-- /.col -->   
             </div>
             <!-- /.row -->
         <br>
 
             <div class="row">
-
                 <div class="col-md-4">
                     <label>Publisher</label>
                     <input type="text" class="form-control" name="publisher" id="publisher" disabled="disabled">
@@ -180,9 +187,7 @@
             <!--/.row-->
         <br>
 
-            <div class="row">               
-
-
+            <div class="row"> 
                 <div class="col-md-2">
                     <label>Almirah / Rack</label>
                     <input type="text" class="form-control" name="almirah" id="almirah" disabled="disabled">
@@ -192,14 +197,12 @@
                 <div class="col-md-5 form-group required">                        
                     <!-- use this class as the red * will be after control-label -->
                     <label class='control-label'>Member Name</label>
-
                     <select class="form-control select2" name="member_name" id="member_name">
                         <option value="NULL">Select One Option. . . </option>
                         @foreach($data['members_data'] as $data1)
                         <option value="{{$data1['USERNO']}}">{{$data1['UFNAME']}} {{$data1['USNAME']}}: ({{$data1['USERNO']}})</option>
                         @endforeach
                     </select>
-
                 </div>
                 <!-- /.col -->
 
@@ -209,9 +212,6 @@
                     <input type="text" class="form-control date" name="date_of_issue" id="date_of_issue" value="{{date('d-m-Y')}}">
                 </div>
                 <!-- /.col -->
-
-                
-
             </div>
             <!-- /.row -->
 
@@ -245,20 +245,20 @@
 
     <!--loader ends-->
 
-    @endsection
+   
 
     <script src="{{asset('js/jquery/jquery.min.js')}}"></script>
 
     <script>
         $(document).ready(function() {
-            $(".date").datepicker({dateFormat: 'dd-mm-yy',maxDate: 0}); // Date picker initialization
-
+            $(".date").datepicker({
+                format: 'dd-mm-yyyy',
+                endDate:'0'
+            }); // Date picker initialization
 
             $(".select2").select2({
                 width: '100%'
             }); // Select-2 initialization
-
-
 
             /*LOADER*/
 
@@ -272,13 +272,7 @@
 
             // To reset the page start
             $(document).on("click", "#reset", function() {
-                    $("#reset").hide();
-                    $("#data").hide();
-                    $("#get_data").show();
-                    $("#report").hide();                    
-                    $("#access_no").val('').removeAttr('disabled');
-                    $("#access_no").focus();
-
+                location.reload('true');
             })
             // To reset the page end
 
@@ -292,8 +286,6 @@
                 }
             });
             //To activate click event in enter end
-
-
 
 
             // To fetch data according to Accession No
@@ -319,7 +311,6 @@
 
                     success: function(response) {
                         var obj = $.parseJSON(response);
-                        //console.log(obj);
 
                         if (obj['result'] == "invald_accessno") {
                             $("#report").html(obj['value']);
@@ -369,8 +360,8 @@
                             $("#editor").val(obj['book']['0'].EDINAME);
                             $("#subject").val(obj['book']['0'].SUB1);
                             $("#reference").val(obj['book']['0'].SUB2);
-
-
+                            $("#auth1").val(obj['book']['0'].AUFNAME1+' '+obj['book']['0'].AUSNAME1);
+                            $("#auth2").val(obj['book']['0'].AUFNAME2+' '+obj['book']['0'].AUSNAME2);
 
                             $("#access_no").attr("disabled", "disabled");
                             $("#reset").show();
@@ -383,7 +374,6 @@
 
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        console.log(jqXHR.responseJSON);
                         swal("Invalid Accession No.", jqXHR.responseJSON.message, "error");
                         $("#access_no").val("");
                         $("#data").hide();
@@ -459,6 +449,4 @@
         });
     </script>
 
-    </body>
-
-    </html>
+@endsection

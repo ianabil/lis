@@ -218,7 +218,7 @@
             <!-- /.row -->
     </div>
     <!-- /.box-body -->
-    @endsection
+
     
     <script src="{{asset('js/jquery/jquery.min.js')}}"></script>
 
@@ -229,11 +229,9 @@
                 format: 'dd-mm-yyyy',
             }); // Date picker initialization
             
-            $(".select2").select2(
-                {
+            $(".select2").select2({
                     width: '100%'
-                }
-            ); // Select-2 initialization
+            }); // Select-2 initialization
 
             var flag='existing_title'; // Global variable for title
 
@@ -317,17 +315,39 @@
                         },
                         error: function(response) {
                             if(response.responseJSON.errors.hasOwnProperty('subject'))
-                                 swal("Cannot Insert Book", "Subject field can not be empty", "error");
+                                 swal("Cannot Insert Book", response.responseJSON.errors.subject['0'], "error");
                             if(response.responseJSON.errors.hasOwnProperty('publisher'))
-                                 swal("Cannot Insert Book", "Publisher Name field can not be empty", "error");                            
+                                 swal("Cannot Insert Book", response.responseJSON.errors.publisher['0'], "error");                            
                             if(response.responseJSON.errors.hasOwnProperty('entry_date'))
-                                 swal("Cannot Insert Book", "Book's Entry Date field can not be empty", "error");
+                                 swal("Cannot Insert Book", response.responseJSON.errors.entry_date['0'], "error");
                             if(response.responseJSON.errors.hasOwnProperty('type'))
-                                 swal("Cannot Insert Book", "Book Type field can not be empty", "error");                                 
+                                 swal("Cannot Insert Book", response.responseJSON.errors.type['0'], "error");                                 
                             if(response.responseJSON.errors.hasOwnProperty('title_code'))
-                                 swal("Cannot Insert Book", "Title field can not be empty", "error");                                 
+                                 swal("Cannot Insert Book", response.responseJSON.errors.title_code['0'], "error");                                 
                             if(response.responseJSON.errors.hasOwnProperty('library_no'))
-                                 swal("Cannot Insert Book", "Library No. field can not be empty", "error");
+                                 swal("Cannot Insert Book", response.responseJSON.errors.library_no['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('new_title'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.new_title['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('first_author_first_name'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.first_author_first_name['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('first_author_last_name'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.first_author_last_name['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('purchase_date'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.purchase_date['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('edition_year_1'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.edition_year_1['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('edition_year_2'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.edition_year_2['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('price'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.price['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('edition_no'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.edition_no['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('total_page'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.total_page['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('price'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.price['0'], "error");
+                            if(response.responseJSON.errors.hasOwnProperty('copy_no'))
+                                 swal("Cannot Insert Book", response.responseJSON.errors.copy_no['0'], "error");
                             
                         }
                     })
@@ -337,6 +357,4 @@
         });
     </script>
 
-    </body>
-
-    </html>
+@endsection
