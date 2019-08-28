@@ -136,7 +136,7 @@
 
             <hr>
 
-            <div class="row form-group required">                
+            <div class="row form-group">                
                 <div class="col-md-3">
                     <label class="control-label">First Author's First Name</label>
                     <input type="text" class="form-control" name="auth1_first_name" id="auth1_first_name">
@@ -162,7 +162,7 @@
             <hr>
 
             <div class="row">                
-                <div class="col-md-3 form-group required">
+                <div class="col-md-3 form-group">
                     <label class="control-label">Publisher</label>
                     <select class="form-control select2" name="publisher" id="publisher">
                         <option value="">Select One Option. . . </option>
@@ -178,18 +178,18 @@
                     <select class="form-control select2" name="location" id="location">
                         <option value="">Select One Option. . . </option>
                         @foreach($data['location_data'] as $data2)
-                        <option value="{{$data2['LOCCD']}}">{{$data2['LOCNAME']}}</option>
+                            <option value="{{$data2['LOCCD']}}" @if($data2['LOCCD']==16) selected @endif>{{$data2['LOCNAME']}}</option>
                         @endforeach
                     </select>
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-2 form-group required">
+                <div class="col-md-2 form-group">
                     <label class="control-label">Subject</label>
                     <select class="form-control select2" name="subject" id="subject">
                         <option value="">Select One Option. . . </option>
                         @foreach($data['subject_data'] as $data3)
-                        <option value="{{$data3['SUBNO']}}">{{$data3['SUBNAME']}}</option>
+                        <option value="{{$data3['SUBNO']}}">{{$data3['SUBNO']}} - {{$data3['SUBNAME']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -199,7 +199,7 @@
                     <select class="form-control select2" name="reference" id="reference">
                         <option value="">Select One Option. . . </option>
                         @foreach($data['subject_data'] as $data3)
-                        <option value="{{$data3['SUBNO']}}">{{$data3['SUBNAME']}}</option>
+                        <option value="{{$data3['SUBNO']}}">{{$data3['SUBNO']}} - {{$data3['SUBNAME']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -211,7 +211,8 @@
 
             <div class="row">
                 <div class="col-md-4"></div>
-                <div class="col-md-4">
+                <div class="col-md-4 text-center">
+                    <span id="entered_book_details"></span><br/>
                     <button type="button" class="form-control btn btn-success" id="submit">SUBMIT
                 </div>
             </div>
@@ -311,7 +312,10 @@
                         },
                         success: function(response) {
                             var obj = $.parseJSON(response);
-                            swal("Book Inserted Successfully", "Accession No. "+obj['accession_no'], "success");                            
+                            swal("Book Inserted Successfully", "Accession No. "+obj['accession_no']+"\nLibrary No. "+obj['library_no'], "success");   
+                            $("#entered_book_details").html("Accession No. "+obj['accession_no']+"<br/>Library No. "+obj['library_no']);
+                            $("#copy_no").val("");     
+                            $("#library_no").val("");                    
                         },
                         error: function(response) {
                             if(response.responseJSON.errors.hasOwnProperty('subject'))
@@ -352,6 +356,18 @@
                         }
                     })
 
+            })
+
+
+            $(document).on("change","#type",function(){
+                if($("#type").val()=="A"){
+                    $("#reference").val('B028');
+                    $("#reference").trigger('change');
+                }
+                else{
+                    $("#reference").val('');
+                    $("#reference").trigger('change');
+                }
             })
 
         });

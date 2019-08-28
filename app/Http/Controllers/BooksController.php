@@ -21,11 +21,11 @@ class BooksController extends Controller
             'library_no' => 'required|max:255', 
             'title_code' => 'required', 
             'new_title' => 'nullable|max:100',
-            'first_author_first_name' => 'required|max:50',
-            'first_author_last_name' => 'required|max:50',
+            'first_author_first_name' => 'max:50',
+            'first_author_last_name' => 'max:50',
             'type' => 'required|max:255',
-            'publisher' => 'required|exists:publishes,PUBCODE',
-            'subject' => 'required|exists:subjs,SUBNO',
+            'publisher' => 'nullable|exists:publishes,PUBCODE',
+            'subject' => 'nullable|exists:subjs,SUBNO',
             'entry_date' => 'required|date',
             'purchase_date' => 'nullable|date',
             'edition_year_1' => 'nullable|integer',
@@ -139,6 +139,7 @@ class BooksController extends Controller
 
             
         $data['accession_no'] = $accessno;
+        $data['library_no'] = $libno;
         echo json_encode($data);
             
     }

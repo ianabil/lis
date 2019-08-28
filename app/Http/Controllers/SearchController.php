@@ -129,7 +129,7 @@ class SearchController extends Controller
 
         if($issue_to_member!=""){
             $join = $join.' INNER JOIN irs ON "books"."ACCESSNO" = "irs"."ACCESSNO" INNER JOIN members ON "irs"."USERNO" = "members"."USERNO"';
-            $where = $where.' AND "irs"."USERNO" = '."'$issue_to_member'".' AND "books"."ISSUE_FLAG"='."'Y'".' AND "irs"."REC_FLAG"!='."'Y'";
+            $where = $where.' AND "irs"."USERNO" = '."'$issue_to_member'".' AND "books"."ISSUE_FLAG"='."'Y'".' AND "irs"."REC_FLAG" IS NULL';
             
         }
 
@@ -202,7 +202,7 @@ class SearchController extends Controller
                     $nestedData['Issue Date'] = 'NA';
                 }
                 if($data->ISSUE_FLAG=='Y'){
-                    $nestedData['Book Status'] = '<span class="badge badge-danger not_available" style="background-color:#953b39; cursor:pointer">NOT AVAILABLE</span>';                    
+                    $nestedData['Book Status'] = '<span class="badge badge-danger not_available" style="background-color:#953b39; cursor:pointer">ISSUED</span>';                    
                     $issued_to_details = ir::join('members','irs.USERNO', '=', 'members.USERNO')
                                         ->where('irs.ACCESSNO',$data->ACCESSNO)
                                         ->orderBy('irs.DTISS','DESC')

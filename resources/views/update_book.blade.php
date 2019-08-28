@@ -340,7 +340,7 @@
                             $("#publisher").val(obj['book']['0'].PUBCODE);
                             $("#publisher").trigger('change');
 
-                            if(obj['book']['0'].LOCCD != null){
+                            if(obj['book']['0'].LOCCD != null || obj['book']['0'].LOCCD != ''){
                                 $("#location").val(obj['book']['0'].LOCCD);
                                 $("#location").trigger('change');
                             }
@@ -348,9 +348,9 @@
                             $("#subject").val(obj['book']['0'].SUB1);
                             $("#subject").trigger('change');
 
-                            if (obj['book']['0'].SUB2 != null) 
+                            if (obj['book']['0'].SUB2 != null || obj['book']['0'].SUB2 != '') 
                             {
-                                $("#reference").val(obj['book']['0'].SUBNO);
+                                $("#reference").val(obj['book']['0'].SUB2);
                                 $("#reference").trigger('change');
                             }
 
