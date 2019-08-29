@@ -47,6 +47,7 @@ class SearchController extends Controller
         
         /* Fetching values from view :: STARTS */
         $accession_no = $request->input('accession_no');
+        $type = trim($request->input('type'));
         $author_name = $request->input('author_name');
         $title = $request->input('title');
         $lib_no = strtoupper($request->input('lib_no'));
@@ -91,8 +92,11 @@ class SearchController extends Controller
         if($accession_no!="")
             $where = $where.' AND "books"."ACCESSNO" ='.$accession_no;
 
+        if($type!="")
+            $where = $where.' AND "books"."TYPE" ILIKE '."'%$type%'";
+
         if($lib_no!="")
-            $where = $where.' AND "books"."LIBNO" ILIKE '."'$lib_no'";
+            $where = $where.' AND "books"."LIBNO" ILIKE '."'%$lib_no%'";
 
         if($subject!="")
            $where = $where.' AND ("books"."SUB1" = '."'$subject'".' OR "SUB2" = '."'$subject')";
@@ -138,7 +142,8 @@ class SearchController extends Controller
             $f_name = $name[0];
             $s_name = $name[1];
 
-            $where = $where.' AND "books"."AUFNAME1" ILIKE '."'$f_name'".' AND "books"."AUSNAME1" ILIKE '."'$s_name'";
+            $where = $where.' AND (("books"."AUFNAME1" ILIKE '."'$f_name'".' AND "books"."AUSNAME1" ILIKE '."'$s_name')";
+            $where = $where.' OR ("books"."AUFNAME2" ILIKE '."'$f_name'".' AND "books"."AUSNAME2" ILIKE '."'$s_name'))";
         }
     
        

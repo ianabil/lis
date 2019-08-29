@@ -267,8 +267,8 @@
 
             // Adding event on the ENTER Key
             $("input").keypress(function(e){
-                   if(e.which==13)
-                        $("#get_data").click();
+                if(e.which==13)
+                    $("#get_data").click();
             })
 
             // To reset the page
@@ -391,7 +391,7 @@
                     var location = $("#location option:selected").val();
                     var subject = $("#subject option:selected").val();
                     var reference = $("#reference option:selected").val();
-                    var content = $("#content").text();
+                    var content = $("#content").val();
 
                     $.ajax({
                         type: "PUT",

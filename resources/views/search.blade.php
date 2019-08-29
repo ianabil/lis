@@ -18,7 +18,7 @@
                 </div>
             </div>
             <!-- /.col -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label>Author Name</label>
                     <select class="form-control select2" name="author" id="author">
@@ -34,7 +34,7 @@
             </div>
             <!-- /.col -->
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label>Title</label>
                     <select class="form-control select2" name="title" id="title">
@@ -46,6 +46,21 @@
                 </div>
             </div>
             <!-- /.col -->
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Type</label>
+                    <select class="form-control select2" name="type" id="type">
+                        <option value="">Select One Option. . . </option>
+                        <option value="B">Book</option>
+                        <option value="J">Journal</option>
+                        <option value="A">Bare Act</option>
+                        <option value="P">Periodical</option>
+                    </select>
+                </div>
+            </div>
+            <!-- /.col -->
+
         </div>
 
         <div class="row">
@@ -158,7 +173,7 @@
                         <option value="LIBNO">Library No</option>
                         <option value="VOLNO">Volume No</option>
                         <option value="EDENO">Edition No</option>
-                        <option value="YEAR">Edition Year</option>                
+                        <option value="YEAR">Edition Year</option>               
                     </select>
                 </div>
             </div>
@@ -342,6 +357,7 @@
                 var accession_no = $("#access_no").val();
                 var author_name = $("#author option:selected").val();
                 var title = $("#title option:selected").val();
+                var type = $("#type option:selected").val();
                 var lib_no = $("#lib_no").val();
                 var pub_name = $("#pub_name option:selected").val();
                 var subject = $("#subject option:selected").val();
@@ -376,6 +392,7 @@
                             accession_no:accession_no,
                             author_name:author_name,
                             title:title,
+                            type:type,
                             lib_no:lib_no,
                             pub_name:pub_name,
                             subject:subject,
