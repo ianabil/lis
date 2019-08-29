@@ -52,12 +52,13 @@ class ReturnBookController extends Controller
             $data['issued_to']= ir::
                              join('books','irs.ACCESSNO', '=', 'books.ACCESSNO')
                              ->join('members', 'irs.USERNO','=','members.USERNO')
-                             ->where([
-                                 ['irs.ACCESSNO',$accession_no],
-                                 ['irs.REC_FLAG','<>',$flag]
-                             ])                             
+                             ->where('irs.ACCESSNO',$accession_no)
+                             ->whereNull('irs.REC_FLAG')                                 
                              ->select('irs.USERNO','irs.DTISS', 'members.UFNAME','members.USNAME')
-                             ->get();   
+                             ->get();  
+                             
+            $data['issued_to']['0']['DTISS']=Carbon::parse($data['issued_to']['0']['DTISS'])->format('d-m-Y');
+                     
 
             $data['publisher'] = book::
                                  leftjoin('publishes','books.PUBCODE','=','publishes.PUBCODE')

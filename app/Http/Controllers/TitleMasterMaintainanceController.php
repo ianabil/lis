@@ -112,8 +112,15 @@ class TitleMasterMaintainanceController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->input('id');
-        title::where('TIT_CODE',$id)->delete(); 
-
-        return 1;
+        $book_count = book::where('TIT_CODE',$id)                
+                            ->count();  
+      
+        if($book_count > 0){
+            return 0;    
+        }
+        else{
+            title::where('TIT_CODE',$id)->delete(); 
+            return 1;
+        }
     }
 }

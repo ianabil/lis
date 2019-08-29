@@ -145,7 +145,10 @@
 
     <script>
         $(document).ready(function(){
-            $( ".date").datepicker({ dateFormat: 'dd-mm-yy', minDate:0 }); // Date picker initialization
+            $( ".date").datepicker({ 
+                format: 'dd-mm-yyyy', 
+                minDate:0 
+            }); // Date picker initialization
 
 
      /* Variable decleration start*/
@@ -236,10 +239,9 @@
                         permanent_address: permanent_address,                                                                        
                         valid_from: valid_from,
                         valid_upto : valid_upto
-                         },
+                    },
                     success: function(response){
                             var obj = $.parseJSON(response);
-                            //console.log(obj);        
                             if (obj['result'] == "success") 
                             {
                                 swal("","New Member Added Successfully","success");
@@ -390,7 +392,7 @@
                         }
                         else
                         {   
-                            swal("Can Not Delete Data","Book exists with this Member","error"); 
+                            swal("Can Not Delete Data","","error"); 
                         } 
 
 

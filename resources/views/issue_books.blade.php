@@ -332,7 +332,7 @@
                             $("#library_no").val(obj['book']['0'].LIBNO);
                             $("#title_code").val(obj['book']['0'].TIT_CODE);
                             $("#title").val(obj['book']['0'].TITLE);
-                            $("#first_author_name").val($.trim(obj['book']['0'].AUFNAME1) + " " + $.trim(obj['book']['0'].AUSNAME1));
+                            
                             $("#location").val(obj['location']['0'].LOCNAME);
 
                             var type_name=obj['book']['0'].TYPE;
@@ -360,8 +360,16 @@
                             $("#editor").val(obj['book']['0'].EDINAME);
                             $("#subject").val(obj['book']['0'].SUB1);
                             $("#reference").val(obj['book']['0'].SUB2);
-                            $("#auth1").val(obj['book']['0'].AUFNAME1+' '+obj['book']['0'].AUSNAME1);
-                            $("#auth2").val(obj['book']['0'].AUFNAME2+' '+obj['book']['0'].AUSNAME2);
+
+                            if(obj['book']['0'].AUFNAME1!=null && obj['book']['0'].AUSNAME1!=null)
+                                $("#auth1").val(obj['book']['0'].AUFNAME1+' '+obj['book']['0'].AUSNAME1);
+                            else if(obj['book']['0'].AUSNAME1==null)
+                                $("#auth1").val(obj['book']['0'].AUFNAME1);
+
+                            if(obj['book']['0'].AUFNAME2!=null && obj['book']['0'].AUSNAME2!=null)
+                                $("#auth1").val(obj['book']['0'].AUFNAME2+' '+obj['book']['0'].AUSNAME2);
+                            else if(obj['book']['0'].AUSNAME2==null)
+                                $("#auth1").val(obj['book']['0'].AUFNAME2);
 
                             $("#access_no").attr("disabled", "disabled");
                             $("#reset").show();

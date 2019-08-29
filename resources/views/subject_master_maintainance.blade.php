@@ -168,28 +168,24 @@
          // get the current row
          var currentRow=$(this).closest("tr"); 
          var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
-         var col2=currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+
          $.ajax({
-                    type: "POST",
-                    url: "delete_subject",
-                    data: {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        id: col1,
-                        desc: col2
-                         },
-                    success: function(response){
-                    if(response==0){
-                        swal("Currently This Record Cannot Be Deleted!!","","error");
-                        //alert("Currently This Record Cannot Be Deleted!!");
-                    }
-                    else{
+            type: "POST",
+            url: "delete_subject",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                id: col1,
+            },
+            success: function(response){
+                if(response==0){
+                    swal("Currently This Record Cannot Be Deleted!!","","error");
+                }
+                else{
                     swal("Subject Deleted Successfully","","success");  
                     table.api().ajax.reload();
-                    //alert("Subject Deleted Succesfully.");
-                    //window.location.replace("subject_master_maintainance");
-                    }
-                    }
-                })
+                }
+            }
+        })
          
     })
 

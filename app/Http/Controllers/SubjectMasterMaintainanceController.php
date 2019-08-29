@@ -126,7 +126,6 @@ class SubjectMasterMaintainanceController extends Controller
     public function delete_from_subj_table(Request $request)  //To delete from Subject table
     {
        $subcode = $request->input('id'); 
-       $subdesc = strtoupper($request->input('desc'));
        $count = book::where('SUB1',$subcode)
                     ->orWhere('SUB2',$subcode)
                     ->count();

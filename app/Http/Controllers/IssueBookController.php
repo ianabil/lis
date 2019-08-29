@@ -45,7 +45,7 @@ class IssueBookController extends Controller
         //Convert dat to DD-MM-YYYY format
          $data['book']['0']['DTPUR']=Carbon::parse($data['book']['0']['DTPUR'])->format('d-m-Y');
          $data['book']['0']['ENTRY_DATE']=Carbon::parse($data['book']['0']['ENTRY_DATE'])->format('d-m-Y');
-
+        
 
         if(count($data['book']) ==0 )
         {
@@ -54,7 +54,14 @@ class IssueBookController extends Controller
         }
         else if($data['book']['0']['ISSUE_FLAG'] == "Y")
         {
-            $data['value']="Book already issued";
+            $rec = ir::join('books','irs.ACCESSNO', '=', 'books.ACCESSNO')
+                    ->join('members', 'irs.USERNO','=','members.USERNO')
+                    ->where('irs.ACCESSNO',$id)
+                    ->whereNull('irs.REC_FLAG')                                 
+                    ->select('irs.USERNO','irs.DTISS', 'members.UFNAME','members.USNAME')
+                    ->get();  
+
+            $data['value']="Book already issued to ".$rec['0']['UFNAME']." ".$rec['0']['USNAME'].' on '.Carbon::parse($data['book']['0']['DTISS'])->format('d-m-Y');
             $data['result']="already_issued";
         } 
         else if($data['book']['0']['ISSUE_FLAG'] == "D")
@@ -105,7 +112,7 @@ class IssueBookController extends Controller
             ir::insert([
                 'ACCESSNO'=>$accessno,
                 'USERNO'=>$member_name,
-                'REC_FLAG'=>"",
+                'REC_FLAG'=>null,
                 'DTISS'=>$date_of_issue
             ]);
 

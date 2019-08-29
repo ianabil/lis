@@ -70,10 +70,7 @@
                     <label>First Auther Name</label>
                     <input type="text" class="form-control" name="first_author_name" id="first_author_name" disabled>
                 </div>
-                <!-- <div class="col-md-8">
-                    <label>Second Author Name</label>
-                    <input type="text" class="form-control" name="second_auther_name" id="second_auther_name">
-                </div> -->
+                
 
                 <div class="col-md-3">            
                     <label>Almirah/Rack</label>
@@ -97,7 +94,7 @@
 
                 <div class="col-md-3">            
                         <label>Changed Location</label>
-                        <select class="form-control" name="location_change" id="location_change">
+                        <select class="form-control select2" name="location_change" id="location_change">
                             <option value="NULL">Select One Option. . . </option>
                             @foreach($data['location_data'] as $data2)                    
                                 <option value="{{$data2['LOCCD']}}">{{$data2['LOCNAME']}}</option>
@@ -115,14 +112,14 @@
                 <div class="col-md-1">
                     <div class="form-group">
                     <label>&nbsp;</label>
-                        <button type="button"  class="form-control btn-danger " name="discard" id="discard">Discard
+                        <button type="button"  class="btn-danger " name="discard" id="discard">Discard
                     </div>
                 </div>
 
                 <div class="col-md-1">
                     <div class="form-group">
                     <label>&nbsp;</label>
-                        <button type="reset"  class="form-control btn btn-primary " name="reset" id="reset">Reset
+                        <button type="reset"  class="btn btn-primary " name="reset" id="reset">Reset
                     </div>
                 </div>
 
@@ -160,7 +157,7 @@
 
     <script>
         $(document).ready(function(){
-            $( ".date").datepicker({ dateFormat: 'dd-mm-yy', minDate:0 }); // Date picker initialization
+            $( ".date").datepicker({ format: 'dd-mm-yyyy', endDate:'0' }); // Date picker initialization
 
      /* Variable decleration start*/
 

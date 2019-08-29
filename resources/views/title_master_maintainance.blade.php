@@ -176,12 +176,15 @@
                     id:id
                 },
                 success:function(response){
-                    swal("Data Deleted Successfully","","success");  
-                    table.api().ajax.reload();
+                    if (response == 1) {
+                        swal("Data Deleted Successfully","","success");  
+                        table.api().ajax.reload();
+                    }
+                    else
+                        swal("Can Not Delete Data","","error"); 
                 },
                 error:function(jqXHR, textStatus, errorThrown) {
-                   //console.log(jqXHR.responseJSON);
-                   swal("Cannot Delete Title","Book exists with this title","error");
+                   swal("Server Error","","error");
                }
             })
         })

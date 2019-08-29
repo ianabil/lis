@@ -51,8 +51,10 @@ class MemberMasterMaintenanceController extends Controller
              ]
         );        
 
-        $data['value']=$member_code + ", Mr./Ms." + $first_name+" " +$last_name;
+        $data['value']=$member_code;
         $data['result']="success";
+
+        echo json_encode($data);
     }
 
 
@@ -184,13 +186,7 @@ class MemberMasterMaintenanceController extends Controller
     public function destroy(Request $request)
     {
         $member_code = $request->input('member_code');
-        $flag="Y";    
-
-        $irs_count = ir::where([
-                            ['USERNO',$member_code],
-                            ['REC_FLAG','<>',$flag]
-                        ])                
-                        ->count();
+        $irs_count = ir::where('USERNO',$member_code)->count();
                     
 
         if($irs_count>=1){

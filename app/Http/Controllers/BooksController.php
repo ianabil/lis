@@ -69,7 +69,7 @@ class BooksController extends Controller
             $dtpur = Carbon::parse($request->input('purchase_date'))->format('Y-m-d');
             $sub1 = $request->input('subject');
             $reference = $request->input('reference');
-            $locno = strtoupper($request->input('location'));
+            $locno = $request->input('location');
             if($locno=="")
                 $locno=null;
             $copy_no = $request->input('copy_no');
@@ -160,15 +160,13 @@ class BooksController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate ($request, [ 
-            'accession_no' => 'required|exists:books,ACCESSNO',
-            'library_no' => 'required|max:255', 
-            'title_code' => 'nullable|exists:titles,TIT_CODE', 
+            'library_no' => 'required|max:255',
             'new_title' => 'nullable|max:100',
-            'first_author_first_name' => 'required|max:50',
-            'first_author_last_name' => 'required|max:50',
+            'first_author_first_name' => 'max:50',
+            'first_author_last_name' => 'max:50',
             'type' => 'required|max:255',
-            'publisher' => 'required|exists:publishes,PUBCODE',
-            'subject' => 'required|exists:subjs,SUBNO',
+            'publisher' => 'nullable|exists:publishes,PUBCODE',
+            'subject' => 'nullable|exists:subjs,SUBNO',
             'entry_date' => 'required|date',
             'purchase_date' => 'nullable|date',
             'edition_year_1' => 'nullable|integer',

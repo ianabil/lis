@@ -46,31 +46,31 @@
                 <!-- /.col -->
                 <div class="col-md-2">
                     <label>Library No.</label>
-                    <input type="text" class="form-control" name="library_no" id="library_no" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="library_no" id="library_no" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-3">
                     <label>Title</label>
-                    <input type="text" class="form-control" name="title" id="title" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-3">
                     <label>First Author</label>
-                    <input type="text" class="form-control" name="auth1" id="auth1" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="auth1" id="auth1" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-3">
                     <label>Second Author</label>
-                    <input type="text" class="form-control" name="auth2" id="auth2" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="auth2" id="auth2" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-1">
                     <label>Type</label>
-                    <input type="text" class="form-control" name="type" id="type" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="type" id="type" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
             </div>
@@ -78,38 +78,38 @@
             <div class="row">
                 <div class="col-md-2">
                     <label>Volume No</label>
-                    <input type="text" class="form-control" name="volume_no" id="volume_no" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="volume_no" id="volume_no" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-2">
                     <label>Part No.</label>
-                    <input type="text" class="form-control" name="part_no" id="part_no" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="part_no" id="part_no" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->                
 
 
                 <div class="col-md-2">
                     <label>Copy No.</label>
-                    <input type="number" class="form-control" name="copy_no" id="copy_no"  placeholder="Not Available" disabled="disabled">
+                    <input type="number" class="form-control" name="copy_no" id="copy_no"  placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-2">
                     <label>Edition No.</label>
-                    <input type="text" class="form-control" name="edition_no" id="edition_no" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="edition_no" id="edition_no" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-2">
                     <label>Edition Year - From</label>
-                    <input type="text" class="form-control" name="edition_year_1" id="edition_year_1" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="edition_year_1" id="edition_year_1" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-2">
                     <label>Edition Year - To</label>
-                    <input type="text" class="form-control" name="edition_year_2" id="edition_year_2" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="edition_year_2" id="edition_year_2" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
@@ -120,39 +120,39 @@
             <div class="row">
                 <div class="col-md-2">
                     <label>Total Page</label>
-                    <input type="number" class="form-control" name="total_page" id="total_page" placeholder="Not Available" disabled="disabled">
+                    <input type="number" class="form-control" name="total_page" id="total_page" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-2">
                     <label>Price (in INR)</label>
-                    <input type="number" class="form-control" name="price" id="price" placeholder="Not Available" disabled="disabled">
+                    <input type="number" class="form-control" name="price" id="price" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-2">
                     <label>Purchase Date</label>
-                    <input type="text" class="form-control date" placeholder="DD/MM/YYYY" name="purchase_date" id="purchase_date" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control date" placeholder="DD/MM/YYYY" name="purchase_date" id="purchase_date" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
                 <div class="col-md-2">
                     <label class="control-label">Entry Date</label>
-                <input type="text" class="form-control date" placeholder="DD/MM/YYYY" name="entry_date" id="entry_date" placeholder="Not Available" disabled="disabled">
+                <input type="text" class="form-control date" placeholder="DD/MM/YYYY" name="entry_date" id="entry_date" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
 
                 <div class="col-md-2">
                     <label>Subject</label>
-                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
 
                 <div class="col-md-2">
                     <label>Reference</label>
-                    <input type="text" class="form-control" name="reference" id="reference" placeholder="Not Available" disabled="disabled">
+                    <input type="text" class="form-control" name="reference" id="reference" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->                
                 
@@ -258,10 +258,10 @@
      
         $(document).ajaxStart(function(){
              $("#wait").css("display", "block");
-             });
+        });
         $(document).ajaxComplete(function(){
-                 $("#wait").css("display", "none");
-                });
+            $("#wait").css("display", "none");
+        });
 				
 //Loader
 
@@ -269,7 +269,6 @@
 
             $(document).on("click","#get_data", function(){
                 accession_no = $("#access_no").val();
-
                 
                 if(accession_no=="")
                 {
@@ -307,8 +306,7 @@
 
                             $("#library_no").val(obj['books']['0'].LIBNO);
                             $("#title_code").val(obj['books']['0'].TIT_CODE);
-                            $("#title").val(obj['books']['0'].TITLE);
-                            $("#first_author_name").val($.trim(obj['books']['0'].AUFNAME1) + " " + $.trim(obj['books']['0'].AUSNAME1));
+                            $("#title").val(obj['books']['0'].TITLE);                            
                             $("#location").val(obj['location']['0'].LOCNAME);
 
                             var type_name=obj['books']['0'].TYPE;
@@ -335,10 +333,17 @@
                             $("#publisher").val(obj['publisher']['0'].PUBNAME);                                                   
                             $("#editor").val(obj['books']['0'].EDINAME);
                             $("#subject").val(obj['books']['0'].SUB1);
-                            $("#reference").val(obj['books']['0'].SUB2);
-                            $("#auth1").val(obj['books']['0'].AUFNAME1+' '+obj['books']['0'].AUSNAME1);
-                            $("#auth2").val(obj['books']['0'].AUFNAME2+' '+obj['books']['0'].AUSNAME2);
+                            $("#reference").val(obj['books']['0'].SUB2);                            
+                            
+                            if(obj['books']['0'].AUFNAME1!=null && obj['books']['0'].AUSNAME1!=null)
+                                $("#auth1").val(obj['books']['0'].AUFNAME1+' '+obj['books']['0'].AUSNAME1);
+                            else if(obj['books']['0'].AUSNAME1==null)
+                                $("#auth1").val(obj['books']['0'].AUFNAME1);
 
+                            if(obj['books']['0'].AUFNAME2!=null && obj['books']['0'].AUSNAME2!=null)
+                                $("#auth1").val(obj['books']['0'].AUFNAME2+' '+obj['books']['0'].AUSNAME2);
+                            else if(obj['books']['0'].AUSNAME2==null)
+                                $("#auth1").val(obj['books']['0'].AUFNAME2);
 
 
                             $("#member_name").val($.trim(obj['issued_to']['0'].UFNAME)+"  "+ $.trim(obj['issued_to']['0'].USNAME));
@@ -353,8 +358,7 @@
                         }
                     },
                     error:function(jqXHR, textStatus, errorThrown) {
-                            console.log(jqXHR.responseJSON);
-                            swal("Invalid Accession No.",jqXHR.responseJSON.message,"error");
+                        swal("Server Error.",jqXHR.responseJSON.message,"error");
                     }
                     
                 })

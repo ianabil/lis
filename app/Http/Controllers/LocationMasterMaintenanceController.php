@@ -151,8 +151,7 @@ class LocationMasterMaintenanceController extends Controller
         $book_count = book::where('LOCNO',$location_code)                
                       ->count();                    
         
-        $data=array();
-
+      
         if($book_count>=1){
 
             return 0;

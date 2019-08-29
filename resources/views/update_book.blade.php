@@ -165,7 +165,7 @@
 
             <hr>
 
-            <div class="row form-group required">                
+            <div class="row form-group ">                
                 <div class="col-md-3">
                     <label class="control-label">First Author's First Name</label>
                     <input type="text" class="form-control" name="auth1_first_name" id="auth1_first_name">
@@ -191,7 +191,7 @@
             <hr>
 
             <div class="row">                
-                <div class="col-md-3 form-group required">
+                <div class="col-md-3 form-group ">
                     <label class="control-label">Publisher</label>
                     <select class="form-control select2" name="publisher" id="publisher">
                         <option value="">Select One Option. . . </option>
@@ -340,8 +340,8 @@
                             $("#publisher").val(obj['book']['0'].PUBCODE);
                             $("#publisher").trigger('change');
 
-                            if(obj['book']['0'].LOCCD != null || obj['book']['0'].LOCCD != ''){
-                                $("#location").val(obj['book']['0'].LOCCD);
+                            if(obj['book']['0'].LOCNO != null || obj['book']['0'].LOCNO != ''){
+                                $("#location").val(obj['book']['0'].LOCNO);
                                 $("#location").trigger('change');
                             }
 
