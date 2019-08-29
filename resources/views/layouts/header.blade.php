@@ -72,7 +72,7 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li><a href="search"><i class="fa fa-circle-o text-violate"></i> <span>Search Book / Journal</span></a></li>
                     <li><a href="entry_new_book"><i class="fa fa-circle-o text-red"></i> <span>Entry New Book / Journal</span></a></li>
-                    <li><a href="update_book"><i class="fa fa-circle-o text-yellow"></i> <span>Update Book / Journal</span></a></li>
+                    <li><a href="update_book"><i class="fa fa-circle-o text-yellow"></i> <span>Modify Book / Journal</span></a></li>
                     <li><a href="issue_books"><i class="fa fa-circle-o text-aqua"></i> <span>Issue of Book / Journal</span></a></li>
                     <li><a href="receipt_books"><i class="fa fa-circle-o text-violate"></i> <span>Return of Book / Journal</span></a></li>
 

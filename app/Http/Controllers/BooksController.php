@@ -18,7 +18,7 @@ class BooksController extends Controller
     public function store(Request $request) // To Add New Books
     {
         $this->validate ($request, [ 
-            'library_no' => 'required|max:255', 
+            'library_no' => 'required|max:255|unique:books,LIBNO', 
             'title_code' => 'required', 
             'new_title' => 'nullable|max:100',
             'first_author_first_name' => 'max:50',

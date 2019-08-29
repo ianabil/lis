@@ -11,10 +11,10 @@
     <!-- /.box-header -->
     <div class="box-body">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label>Accession No.</label>
-                    <input type="text" class="form-control" name="access_no" id="access_no" placeholder="Complete / Partial Accession No.">
+                    <input type="text" class="form-control" name="access_no" id="access_no">
                 </div>
             </div>
             <!-- /.col -->
@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <label>Type</label>
                     <select class="form-control select2" name="type" id="type">
-                        <option value="">Select One Option. . . </option>
+                        <option value="">Select One Option </option>
                         <option value="B">Book</option>
                         <option value="J">Journal</option>
                         <option value="A">Bare Act</option>
@@ -60,6 +60,13 @@
                 </div>
             </div>
             <!-- /.col -->
+            <br/>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="discard">
+                <label class="form-check-label" for="discard">
+                  Discard
+                </label>
+            </div>
 
         </div>
 
@@ -143,6 +150,14 @@
 
             <div class="col-md-3">
                 <div class="form-group">
+                    <label>Return Date In A Range</label>
+                    <input type="text" class="form-control date_range" name="return_date" id="return_date">
+                </div>
+            </div>
+            <!-- /.col -->
+
+            <div class="col-md-3">
+                <div class="form-group">
                     <label>Entry Date In A Range</label>
                     <input type="text" class="form-control date_range" name="entry_date" id="entry_date">
                 </div>
@@ -155,7 +170,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Issued To</label>
-                    <select class="form-control select2" name="member_name" id="member_name">
+                    <select class="form-control select2" name="issued_to_member" id="issued_to_member">
                         <option value="">Select One Option. . . </option>
                         @foreach($data['member'] as $member)                    
                             <option value="{{$member['USERNO']}}">{{$member['UFNAME']}} {{$member['USNAME']}}</option>
@@ -167,13 +182,26 @@
 
             <div class="col-md-3">
                 <div class="form-group">
+                    <label>Returned From</label>
+                    <select class="form-control select2" name="returned_from_member" id="returned_from_member">
+                        <option value="">Select One Option. . . </option>
+                        @foreach($data['member'] as $member)                    
+                            <option value="{{$member['USERNO']}}">{{$member['UFNAME']}} {{$member['USNAME']}}</option>
+                        @endforeach 
+                    </select>
+                </div>
+            </div>
+            <!-- /.col -->
+
+            <div class="col-md-2">
+                <div class="form-group">
                     <label>Arrange Result By</label>
                     <select class="form-control select2" name="order_by" id="order_by">                        
                         <option value="ACCESSNO">Accession No</option> 
                         <option value="LIBNO">Library No</option>
                         <option value="VOLNO">Volume No</option>
                         <option value="EDENO">Edition No</option>
-                        <option value="YEAR">Edition Year</option>               
+                        <option value="YEAR">Edition Year</option>                
                     </select>
                 </div>
             </div>
@@ -192,7 +220,7 @@
             </div>
             <!-- /.col -->
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <button type="button" class="button btn-success btn-lg" style="margin-top:15px" id="search">SEARCH
             </div>
 
@@ -314,6 +342,33 @@
                 $(this).val('');
             });            
             // For Issue Date Range Picker :: ENDS
+
+
+            // For Return Date Range Picker :: STARTS
+            var return_from_date;
+            var return_to_date;
+            $("#return_date").daterangepicker({
+                    opens: 'left',
+                    autoUpdateInput: false,
+                    endDate:moment(),
+                    maxDate:moment(),
+                    locale: {
+                        format: 'DD/MM/YYYY',
+                        cancelLabel: 'Clear'
+                    }
+                }, function(start, end, label) {
+                    return_from_date = start.format('YYYY-MM-DD');
+                    return_to_date = end.format('YYYY-MM-DD');
+            });
+
+            $("#return_date").on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+            });
+
+            $("#return_date").on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });            
+            // For Issue Date Range Picker :: ENDS
             
             // For Entry Date Range Picker :: STARTS
             var entry_from_date;
@@ -358,13 +413,15 @@
                 var author_name = $("#author option:selected").val();
                 var title = $("#title option:selected").val();
                 var type = $("#type option:selected").val();
+                var discard = $("#discard").is(":checked");
                 var lib_no = $("#lib_no").val();
                 var pub_name = $("#pub_name option:selected").val();
                 var subject = $("#subject option:selected").val();
                 var edition_no = $("#edition_no").val();
                 var edition_year = $("#year").val();
                 var content = $("#content").val();
-                var issue_to_member = $("#member_name").val();
+                var issue_to_member = $("#issued_to_member").val();
+                var returned_from_member = $("#returned_from_member").val();
                 var order_by = $("#order_by option:selected").val();
                 var order_type = $("input[name='order_type']:checked").val();
 
@@ -393,6 +450,7 @@
                             author_name:author_name,
                             title:title,
                             type:type,
+                            discard:discard,
                             lib_no:lib_no,
                             pub_name:pub_name,
                             subject:subject,
@@ -400,10 +458,13 @@
                             edition_year:edition_year,
                             content:content,
                             issue_to_member:issue_to_member,
+                            returned_from_member:returned_from_member,
                             purchase_from_date:purchase_from_date,
                             purchase_to_date:purchase_to_date,
                             issue_from_date:issue_from_date,
                             issue_to_date:issue_to_date,
+                            return_from_date:return_from_date,
+                            return_to_date:return_to_date,
                             entry_from_date:entry_from_date,
                             entry_to_date:entry_to_date,
                             order_by:order_by,
@@ -413,7 +474,9 @@
 
                 "initComplete":function( settings, json){
                     $("#search_result").show(); // showing the div containing the table
-                    $('html, body').animate({scrollTop:$(document).height()}, 'slow'); // Moving scrollbar to the bottom
+                    $('html, body').animate({
+                        scrollTop:$(document).height()
+                    }, 'slow'); // Moving scrollbar to the bottom
                 },
 
                     "columns": [                

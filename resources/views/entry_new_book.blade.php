@@ -14,7 +14,7 @@
                 <div class="col-md-2">
                     <div class="form-group required">
                         <label class="control-label">Library No.</label>
-                        <input type="text" class="form-control" name="library_no" id="library_no">
+                        <input type="text" class="form-control" name="library_no" id="library_no" onkeyup="this.value = this.value.toUpperCase();">
                     </div>
                 </div>
                 <!-- /.col -->
@@ -252,7 +252,7 @@
             })
 
             $(document).on("click","#submit", function(){
-                    var library_no = $("#library_no").val();
+                    var library_no = $.trim($("#library_no").val());
                     var title_code = $("#title option:selected").val();
                     var title = $("#title option:selected").text();
                     var new_title = $("#title_new").val();

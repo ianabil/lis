@@ -48,6 +48,7 @@ class SearchController extends Controller
         /* Fetching values from view :: STARTS */
         $accession_no = $request->input('accession_no');
         $type = trim($request->input('type'));
+        $discard = $request->input('discard');
         $author_name = $request->input('author_name');
         $title = $request->input('title');
         $lib_no = strtoupper($request->input('lib_no'));
@@ -57,10 +58,13 @@ class SearchController extends Controller
         $edition_year = $request->input('edition_year');
         $content = trim(strtoupper($request->input('content')));
         $issue_to_member = $request->input('issue_to_member'); 
+        $returned_from_member = $request->input('returned_from_member');         
         $purchase_from_date = $request->input('purchase_from_date'); 
         $purchase_to_date = $request->input('purchase_to_date'); 
         $issue_from_date = $request->input('issue_from_date'); 
         $issue_to_date = $request->input('issue_from_date'); 
+        $return_from_date = $request->input('return_from_date'); 
+        $return_to_date = $request->input('return_from_date'); 
         $entry_from_date = $request->input('entry_from_date'); 
         $entry_to_date = $request->input('entry_to_date'); 
         $order_by = $request->input('order_by'); 
@@ -69,7 +73,7 @@ class SearchController extends Controller
 
 
         // Default SELECT query
-        $select = 'SELECT "books"."ACCESSNO", "books"."TYPE", "books"."LIBNO", 
+        $select = 'SELECT DISTINCT "books"."ACCESSNO", "books"."TYPE", "books"."LIBNO", 
         "books"."TITLE", "publishes"."PUBNAME", "books"."AUFNAME1", "books"."AUFNAME2", 
         "books"."AUSNAME1", "books"."AUSNAME2", "books"."VOLNO", "books"."EDENO", 
         "books"."YEAR", "books"."PRICE", "books"."DTPUR", "books"."COPY_NO", "books"."CONTENT", "books"."ISSUE_FLAG"
@@ -92,8 +96,11 @@ class SearchController extends Controller
         if($accession_no!="")
             $where = $where.' AND "books"."ACCESSNO" ='.$accession_no;
 
-        if($type!="")
+        if($type!="")            
             $where = $where.' AND "books"."TYPE" ILIKE '."'%$type%'";
+
+        if($discard=="true")
+            $where = $where.' AND "books"."ISSUE_FLAG" ILIKE '."'%D%'";
 
         if($lib_no!="")
             $where = $where.' AND "books"."LIBNO" ILIKE '."'%$lib_no%'";
@@ -126,14 +133,39 @@ class SearchController extends Controller
             $where = $where.' AND "books"."TIT_CODE" ='.$title;
         }
 
+        $irs_join_flag='N';
+
         if($issue_from_date!="" && $issue_to_date!=""){
-            $join = $join.' INNER JOIN irs ON "books"."ACCESSNO" = "irs"."ACCESSNO"';
-            $where = $where.' AND "irs"."DTISS" BETWEEN '."'$issue_from_date'".' AND '."'$issue_to_date'".' AND "irs"."REC_FLAG"!='."'Y'";
+            if($irs_join_flag=='N'){
+                $join = $join.' INNER JOIN irs ON "books"."ACCESSNO" = "irs"."ACCESSNO"';
+                $irs_join_flag='Y';
+            }
+            $where = $where.' AND "irs"."DTISS" BETWEEN '."'$issue_from_date'".' AND '."'$issue_to_date'";
         }  
 
-        if($issue_to_member!=""){
-            $join = $join.' INNER JOIN irs ON "books"."ACCESSNO" = "irs"."ACCESSNO" INNER JOIN members ON "irs"."USERNO" = "members"."USERNO"';
-            $where = $where.' AND "irs"."USERNO" = '."'$issue_to_member'".' AND "books"."ISSUE_FLAG"='."'Y'".' AND "irs"."REC_FLAG" IS NULL';
+        if($return_from_date!="" && $return_to_date!=""){
+            if($irs_join_flag=='N'){
+                $join = $join.' INNER JOIN irs ON "books"."ACCESSNO" = "irs"."ACCESSNO"';
+                $irs_join_flag='Y';
+            }
+            $where = $where.' AND "irs"."DTREC" BETWEEN '."'$return_from_date'".' AND '."'$return_to_date'";
+        }  
+
+        if($issue_to_member!=""){     
+            if($irs_join_flag=='N'){       
+                $join = $join.' INNER JOIN irs ON "books"."ACCESSNO" = "irs"."ACCESSNO" INNER JOIN members ON "irs"."USERNO" = "members"."USERNO"';
+                $irs_join_flag='Y';
+            }
+            $where = $where.' AND "irs"."USERNO" = '."'$issue_to_member'".' AND "books"."ISSUE_FLAG"='."'Y'".' AND ("irs"."REC_FLAG" IS NULL OR "irs"."REC_FLAG" <>'."'Y')";
+            
+        }
+
+        if($returned_from_member!=""){
+            if($irs_join_flag=='N'){   
+                $join = $join.' INNER JOIN irs ON "books"."ACCESSNO" = "irs"."ACCESSNO" INNER JOIN members ON "irs"."USERNO" = "members"."USERNO"';
+                $irs_join_flag='Y';
+            }
+            $where = $where.' AND "irs"."USERNO" = '."'$returned_from_member'".' AND ("books"."ISSUE_FLAG" IS NULL OR "books"."ISSUE_FLAG" <>'."'Y')";
             
         }
 
@@ -188,7 +220,7 @@ class SearchController extends Controller
         $data = DB::select($select.$join.$where.$orderBy.$orderType.$limit_data); 
 
         // For getting the total no. of data
-        $select = 'SELECT COUNT(*) FROM books LEFT JOIN publishes ON "books"."PUBCODE" = "publishes"."PUBCODE"';
+        $select = 'SELECT COUNT(DISTINCT "books".*) FROM books LEFT JOIN publishes ON "books"."PUBCODE" = "publishes"."PUBCODE"';
         
         // For getting the total no. of data
         $totalData = DB::select($select.$join.$where);
