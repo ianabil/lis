@@ -22,8 +22,7 @@ class MemberMasterMaintenanceController extends Controller
     {
         $this->validate ( $request, [ 
             'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'valid_from' => 'required'            
+            'last_name' => 'required|max:255',    
         ] ); 
 
         $member_code = 1+ member::max('USERNO');
@@ -32,8 +31,8 @@ class MemberMasterMaintenanceController extends Controller
         $designation = strtoupper($request->input('designation'));
         $present_address = strtoupper($request->input('present_address'));
         $permanent_address = strtoupper($request->input('permanent_address'));
-        $valid_from = $request->input('valid_from');
-        $valid_upto = $request->input('valid_upto');        
+        $valid_from = null;
+        $valid_upto = null;
         $usr_id=Auth::user()->user_id;
 
         member::insert(
@@ -64,11 +63,8 @@ class MemberMasterMaintenanceController extends Controller
             1 =>'UFNAME',
             2 =>'USNAME',     
             3 =>'UDESIG',  
-            4 =>'UPRADD1',  
-            5 =>'UPRADD2',  
-            6 =>'VALIDFR',  
-            7 =>'VALIDTO',                                                              
-            8=>'action'
+            4 =>'UPRADD1',                                                            
+            5 =>'action'
         );
 
         $totalData = member::count();
@@ -93,10 +89,7 @@ class MemberMasterMaintenanceController extends Controller
                                 ->orWhere('UFNAME','like',"%{$search}%")
                                 ->orWhere('USNAME','like',"%{$search}%")     
                                 ->orWhere('UDESIG','like',"%{$search}%")
-                                ->orWhere('UPRADD1','like',"%{$search}%") 
-                                ->orWhere('UPRADD2','like',"%{$search}%")
-                                ->orWhere('VALIDFR','like',"%{$search}%") 
-                                ->orWhere('VALIDTO','like',"%{$search}%")                                 
+                                ->orWhere('UPRADD1','like',"%{$search}%")                               
                                 ->offset($start)
                                 ->limit($limit)
                                 ->orderBy($order,$dir)
@@ -105,10 +98,7 @@ class MemberMasterMaintenanceController extends Controller
                                     ->orWhere('UFNAME','like',"%{$search}%")
                                     ->orWhere('USNAME','like',"%{$search}%")     
                                     ->orWhere('UDESIG','like',"%{$search}%")
-                                    ->orWhere('UPRADD1','like',"%{$search}%") 
-                                    ->orWhere('UPRADD2','like',"%{$search}%")
-                                    ->orWhere('VALIDFR','like',"%{$search}%") 
-                                    ->orWhere('VALIDTO','like',"%{$search}%")                                  
+                                    ->orWhere('UPRADD1','like',"%{$search}%")                               
                                     ->count();
         }
 
@@ -121,11 +111,12 @@ class MemberMasterMaintenanceController extends Controller
                 $nestedData['UFNAME'] = $m->UFNAME;
                 $nestedData['USNAME'] = $m->USNAME;   
                 $nestedData['UDESIG'] = $m->UDESIG;
-                $nestedData['UPRADD1'] = $m->UPRADD1;                   
-                $nestedData['UPRADD2'] = $m->UPRADD2;
-                $nestedData['VALIDFR'] = $m->VALIDFR;   
-                $nestedData['VALIDTO'] = $m->VALIDTO;
-                $nestedData['action'] = '<i class="fa fa-trash" aria-hidden="true"></i>';                
+                $nestedData['UPRADD1'] = $m->UPRADD1;
+                if(Auth::user()->status == 'A')              
+                    $nestedData['action'] = '<i class="fa fa-trash delete" aria-hidden="true"></i>';
+                else
+                    $nestedData['action'] = '<i class="fa fa-trash" aria-hidden="true" style="opacity: 0.6;cursor: not-allowed"></i>';
+                    
                 $data[] = $nestedData;
             }
         }
@@ -156,10 +147,7 @@ class MemberMasterMaintenanceController extends Controller
         $first_name = strtoupper($request->input('first_name'));
         $last_name = strtoupper($request->input('last_name'));
         $designation = strtoupper($request->input('designation'));
-        $present_address = strtoupper($request->input('present_address'));
-        $permanent_address = strtoupper($request->input('permanent_address'));
-        $valid_from = $request->input('valid_from');
-        $valid_upto = $request->input('valid_upto');        
+        $present_address = strtoupper($request->input('present_address'));        
         $usr_id=Auth::user()->user_id;
 
 
@@ -170,12 +158,9 @@ class MemberMasterMaintenanceController extends Controller
                     'USNAME'=>$last_name,
                     'UDESIG'=>$designation,
                     'UPRADD1'=>$present_address,
-                    'UPRADD2'=>$permanent_address,
-                    'VALIDFR'=>$valid_from,
-                    'VALIDTO'=>$valid_upto,
                     'MODIFIED_ON'=> Carbon::today(),
                     'USR_ID'=> $usr_id                           
-                    ]);
+                ]);
 
        return 1;
 

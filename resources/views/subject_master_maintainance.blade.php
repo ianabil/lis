@@ -78,8 +78,7 @@
              "data": "SUBNO"},
             {"class": "subject data",   
              "data": "SUBNAME"},
-            {"class": "delete", 
-             "data": "action"}
+            {"data": "action"}
         ],
 
         "drawCallback": function( settings ) {
@@ -110,22 +109,22 @@
         
 
     $.ajax({
-                    type: "POST",
-                    url: "update_subject",
-                    data: {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        id: scode,
-                        subject: sub
-                         },
-                    success: function(response){
-                        swal(response+" Subject Updated Successfully","","success");
-                        table.api().ajax.reload();
+            type: "POST",
+            url: "update_subject",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                id: scode,
+                subject: sub
                     },
-                    error:function(jqXHR, textStatus, errorThrown) {
-                        swal("Cannot Update Subject This Way!!",jqXHR.responseJSON.errors.subject['0'],"error");
-                        table.api().ajax.reload();
-                    } 
-                })
+            success: function(response){
+                swal(response+" Subject Updated Successfully","","success");
+                table.api().ajax.reload();
+            },
+            error:function(jqXHR, textStatus, errorThrown) {
+                swal("Cannot Update Subject This Way!!",jqXHR.responseJSON.errors.subject['0'],"error");
+                table.api().ajax.reload();
+            } 
+        })
     });
 
 //inserting new subject

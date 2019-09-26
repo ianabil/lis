@@ -56,7 +56,10 @@ class SubjectMasterMaintainanceController extends Controller
             foreach($subjects as $sub){
                 $nestedData['SUBNO'] = $sub->SUBNO;
                 $nestedData['SUBNAME'] = $sub->SUBNAME;
-                $nestedData['action'] = "<i class='fa fa-trash' aria-hidden='true'></i>";
+                if(Auth::user()->status == 'A')              
+                    $nestedData['action'] = '<i class="fa fa-trash delete" aria-hidden="true"></i>';
+                else
+                    $nestedData['action'] = '<i class="fa fa-trash" aria-hidden="true" style="opacity: 0.6;cursor: not-allowed"></i>';
 
                 $data[] = $nestedData;
             }

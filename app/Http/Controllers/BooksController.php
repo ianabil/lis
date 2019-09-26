@@ -9,6 +9,7 @@ use App\publish;
 use App\loca;
 use App\subj;
 use App\title;
+use App\Supplier;
 use Auth;
 use Carbon\Carbon;
 
@@ -34,7 +35,12 @@ class BooksController extends Controller
             'total_page' => 'nullable|integer',
             'price' => 'nullable|between:0,999999.99',
             'copy_no' => 'nullable|integer'
-        ]); 
+        ],
+        [
+            'library_no.unique' => 'Duplicate Library No. Not Allowed',
+        ]
+    
+        ); 
         
             $accessno = 1+ book::max('ACCESSNO'); 
             $libno = strtoupper(trim($request->input('library_no'))); 
@@ -70,12 +76,20 @@ class BooksController extends Controller
             $sub1 = $request->input('subject');
             $reference = $request->input('reference');
             $locno = $request->input('location');
+            $supplier = $request->input('supplier');
+
             if($locno=="")
                 $locno=null;
+
+            if($supplier=="")
+                $supplier=null;
+
             $copy_no = $request->input('copy_no');
+
             if($copy_no=="")
                 $copy_no = null;
-            $content = strtoupper($request->input('content'));
+
+            $content = trim(strtoupper($request->input('content')));
             $entry_date = Carbon::parse($request->input('entry_date'))->format('Y-m-d');
             $update_date = Carbon::today();  
             $uploaded_date = Carbon::today();  
@@ -128,6 +142,7 @@ class BooksController extends Controller
                  'SUB1'=>$sub1,
                  'SUB2'=>$reference,
                  'LOCNO'=>$locno,
+                 'SUPPLIER_CODE' => $supplier,
                  'COPY_NO'=>$copy_no,
                  'CONTENT'=>$content,
                  'ISSUE_FLAG'=>$issue_flag,
@@ -150,6 +165,8 @@ class BooksController extends Controller
         $data = array();
         
         $data['book'] = book::where('ACCESSNO',$id)->get();
+        $data['book'][0]['DTPUR'] = Carbon::parse($data['book'][0]['DTPUR'])->format('d-m-Y');
+        $data['book'][0]['ENTRY_DATE'] = Carbon::parse($data['book'][0]['ENTRY_DATE'])->format('d-m-Y');
         $data['book_count'] = count($data['book']);        
         
         echo json_encode($data);
@@ -174,7 +191,8 @@ class BooksController extends Controller
             'edition_no' => 'nullable|integer',
             'total_page' => 'nullable|integer',
             'price' => 'nullable|between:0,999999.99',
-            'copy_no' => 'nullable|integer'
+            'copy_no' => 'nullable|integer',
+            'supplier' => 'nullable|integer|max:2000'
         ]); 
 
             $accession_no = $request->input('accession_no');
@@ -208,12 +226,20 @@ class BooksController extends Controller
             $dtpur = Carbon::parse($request->input('purchase_date'))->format('Y-m-d');
             $sub1 = $request->input('subject');
             $reference = $request->input('reference');
-            $locno = strtoupper($request->input('location'));
+            $locno = $request->input('location');
+            $supplier = $request->input('supplier');
+
             if($locno=="")
                 $locno=null;
+
+            if($supplier=="")
+                $supplier=null;
+
             $copy_no = $request->input('copy_no');
+
             if($copy_no=="")
                 $copy_no = null;
+
             $content = strtoupper($request->input('content'));
             $entry_date = Carbon::parse($request->input('entry_date'))->format('Y-m-d');
             $update_date = Carbon::today(); 
@@ -255,6 +281,7 @@ class BooksController extends Controller
                  'SUB1'=>$sub1,
                  'SUB2'=>$reference,
                  'LOCNO'=>$locno,
+                 'SUPPLIER_CODE' => $supplier,
                  'COPY_NO'=>$copy_no,
                  'CONTENT'=>$content,
                  'ENTRY_DATE'=>$entry_date,
@@ -271,6 +298,7 @@ class BooksController extends Controller
         $data = array();
         $data['publishers_data'] = publish::get();
         $data['location_data'] = loca::get();
+        $data['suppliers_data'] = Supplier::get();
         $data['subject_data'] = subj::get();
         $data['title_data'] = title::get();
 
@@ -284,6 +312,7 @@ class BooksController extends Controller
         $data = array();
         $data['publishers_data'] = publish::get();
         $data['location_data'] = loca::get();
+        $data['suppliers_data'] = Supplier::get();
         $data['subject_data'] = subj::get();
         $data['title_data'] = title::get();
         

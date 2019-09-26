@@ -59,7 +59,7 @@
                                 <td>{{$data1->YEAR}}</td>
                                 <td>{{$data1->PRICE}}</td>
                                 <td>{{$data1->DTPUR}}</td>
-                                <td>{{$data1->COPY}}</td>
+                                <td>{{$data1->COPY_NO}}</td>
                                 <td>{{$data1->CONTENT}}</td>
                             </tr>
                             @endforeach

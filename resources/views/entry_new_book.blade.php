@@ -11,10 +11,10 @@
     <!-- /.box-header -->
     <div class="box-body">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="form-group required">
                         <label class="control-label">Library No.</label>
-                        <input type="text" class="form-control" name="library_no" id="library_no" onkeyup="this.value = this.value.toUpperCase();">
+                        <input type="text" class="form-control" name="library_no" id="library_no" style="text-transform: uppercase">
                     </div>
                 </div>
                 <!-- /.col -->
@@ -162,12 +162,23 @@
             <hr>
 
             <div class="row">                
-                <div class="col-md-3 form-group">
+                <div class="col-md-2 form-group">
                     <label class="control-label">Publisher</label>
                     <select class="form-control select2" name="publisher" id="publisher">
                         <option value="">Select One Option. . . </option>
                         @foreach($data['publishers_data'] as $data1)
-                        <option value="{{$data1['PUBCODE']}}">{{$data1['PUBNAME']}}</option>
+                        <option value="{{$data1['PUBCODE']}}">{{$data1['PUBCODE']}} - {{$data1['PUBNAME']}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-3 form-group">
+                    <label class="control-label">Supplier</label>
+                    <select class="form-control select2" name="supplier" id="supplier">
+                        <option value="">Select One Option. . . </option>
+                        @foreach($data['suppliers_data'] as $data1)
+                        <option value="{{$data1['SUPPLIER_CODE']}}">{{$data1['SUPPLIER_CODE']}} - {{$data1['SUPPLIER_NAME']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -178,7 +189,7 @@
                     <select class="form-control select2" name="location" id="location">
                         <option value="">Select One Option. . . </option>
                         @foreach($data['location_data'] as $data2)
-                            <option value="{{$data2['LOCCD']}}" @if($data2['LOCCD']==16) selected @endif>{{$data2['LOCNAME']}}</option>
+                            <option value="{{$data2['LOCCD']}}" @if($data2['LOCCD']==16) selected @endif>{{$data2['LOCCD']}} - {{$data2['LOCNAME']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -231,7 +242,7 @@
             }); // Date picker initialization
             
             $(".select2").select2({
-                    width: '100%'
+                width: '100%'
             }); // Select-2 initialization
 
             var flag='existing_title'; // Global variable for title
@@ -273,10 +284,11 @@
                     var entry_date = $("#entry_date").val();
                     var type = $("#type option:selected").val();
                     var publisher = $("#publisher option:selected").val();
+                    var supplier = $("#supplier option:selected").val();
                     var location = $("#location option:selected").val();
                     var subject = $("#subject option:selected").val();
                     var reference = $("#reference option:selected").val();
-                    var content = $("#content").text();
+                    var content = $("#content").val();
 
                     $.ajax({
                         type: "POST",
@@ -306,6 +318,7 @@
                             type: type,
                             publisher: publisher,
                             location: location,
+                            supplier: supplier,
                             subject: subject,
                             reference: reference,
                             content:content

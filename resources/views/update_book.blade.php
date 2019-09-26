@@ -196,7 +196,18 @@
                     <select class="form-control select2" name="publisher" id="publisher">
                         <option value="">Select One Option. . . </option>
                         @foreach($data['publishers_data'] as $data1)
-                        <option value="{{$data1['PUBCODE']}}">{{$data1['PUBNAME']}}</option>
+                        <option value="{{$data1['PUBCODE']}}">{{$data1['PUBCODE']}} - {{$data1['PUBNAME']}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-2 form-group">
+                    <label class="control-label">Supplier</label>
+                    <select class="form-control select2" name="supplier" id="supplier">
+                        <option value="">Select One Option. . . </option>
+                        @foreach($data['suppliers_data'] as $data1)
+                        <option value="{{$data1['SUPPLIER_CODE']}}">{{$data1['SUPPLIER_CODE']}} - {{$data1['SUPPLIER_NAME']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -207,7 +218,7 @@
                     <select class="form-control select2" name="location" id="location">
                         <option value="">Select One Option. . . </option>
                         @foreach($data['location_data'] as $data2)
-                        <option value="{{$data2['LOCCD']}}">{{$data2['LOCNAME']}}</option>
+                        <option value="{{$data2['LOCCD']}}">{{$data2['LOCCD']}} - {{$data2['LOCNAME']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -218,7 +229,7 @@
                     <select class="form-control select2" name="subject" id="subject">
                         <option value="">Select One Option. . . </option>
                         @foreach($data['subject_data'] as $data3)
-                        <option value="{{$data3['SUBNO']}}">{{$data3['SUBNAME']}}</option>
+                        <option value="{{$data3['SUBNO']}}">{{$data3['SUBNO']}} - {{$data3['SUBNAME']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -228,7 +239,7 @@
                     <select class="form-control select2" name="reference" id="reference">
                         <option value="">Select One Option. . . </option>
                         @foreach($data['subject_data'] as $data3)
-                        <option value="{{$data3['SUBNO']}}">{{$data3['SUBNAME']}}</option>
+                        <option value="{{$data3['SUBNO']}}">{{$data3['SUBNO']}} - {{$data3['SUBNAME']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -340,6 +351,9 @@
                             $("#publisher").val(obj['book']['0'].PUBCODE);
                             $("#publisher").trigger('change');
 
+                            $("#supplier").val(obj['book']['0'].SUPPLIER_CODE);
+                            $("#supplier").trigger('change');
+
                             if(obj['book']['0'].LOCNO != null || obj['book']['0'].LOCNO != ''){
                                 $("#location").val(obj['book']['0'].LOCNO);
                                 $("#location").trigger('change');
@@ -388,6 +402,7 @@
                     var entry_date = $("#entry_date").val();
                     var type = $("#type option:selected").val();
                     var publisher = $("#publisher option:selected").val();
+                    var supplier = $("#supplier option:selected").val();
                     var location = $("#location option:selected").val();
                     var subject = $("#subject option:selected").val();
                     var reference = $("#reference option:selected").val();
@@ -420,6 +435,7 @@
                             type: type,
                             publisher: publisher,
                             location: location,
+                            supplier: supplier,
                             subject: subject,
                             reference: reference,
                             content:content

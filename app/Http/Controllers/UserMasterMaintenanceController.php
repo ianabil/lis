@@ -38,27 +38,24 @@ class UserMasterMaintenanceController extends Controller
         
         
         User::insert([
-                            'user_id'=>$user_id,
-                            'name'=>$name,
-                            'email'=>$email,
-                            'password'=>$password,
-                            'status'=>$status,
-                            'created_at'=>Carbon::today(),
-                            'updated_at'=>Carbon::today()
+                        'user_id'=>$user_id,
+                        'name'=>$name,
+                        'email'=>$email,
+                        'password'=>$password,
+                        'status'=>$status,
+                        'created_at'=>Carbon::today(),
+                        'updated_at'=>Carbon::today()
                     ]);
-        return 1;
-       
+        return 1;       
                
     }
 
     public function update_login_user_details(Request $request)
     {
-
-
         $this->validate ( $request, [ 
             'edit_password' => 'required|max:255',
             'edit_re_password' => 'required|max:255'            
-        ] ); 
+        ]); 
 
         $user_id_select=$request->input('user_id_select');  
         $edit_password= $request->input('edit_password');  
@@ -88,8 +85,8 @@ class UserMasterMaintenanceController extends Controller
                             'password'=>Hash::make($edit_password),
                             'status'=>$edit_type,
                             'updated_at'=>Carbon::today()
-                            ]);
-                    
+                        ]);
+                                            
             return 0;
         }
     }

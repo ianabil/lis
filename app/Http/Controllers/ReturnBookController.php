@@ -101,6 +101,7 @@ class ReturnBookController extends Controller
 
                         
             ir::where('irs.ACCESSNO',$accession_no)  
+                ->whereNull('REC_FLAG')
                 ->update([
                     'REC_FLAG'=> $flag,
                     'DTREC'=> $date_of_receipt,                    

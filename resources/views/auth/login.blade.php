@@ -25,7 +25,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="col-sm-12 text-center" style="border:#d9a04e 5px solid;background-color:#b8c9f6;-webkit-border-radius: 15px 15px 15px 15px;border-radius: 15px 15px 15px 15px;">
-                                    <strong><h4 style="margin-bottom:1px;">LIBRARY MANAGEMENT SYSTEM</h4></strong>
+                                    <strong><h4 style="margin-bottom:1px;">LIBRARY INFORMATION SYSTEM</h4></strong>
                                     <strong>CALCUTTA HIGH COURT</strong>
                                 </div>
                             </div>                            

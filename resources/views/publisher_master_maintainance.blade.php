@@ -91,8 +91,7 @@
                  "data": "PUBNAME" },
                 {"class": "address data",   
                  "data": "PUBADD" },
-                {"class": "delete", 
-                 "data": "action" }
+                {"data": "action" }
             ]
         }); 
         // DataTable initialization with Server-Processing ::END

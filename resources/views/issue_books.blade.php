@@ -14,8 +14,8 @@
         <div class="row">
             <div class="col-md-3 form-group required">
             <!-- use this class as the red * will be after control-label -->
-                    <label class='control-label'>Accession No.</label>
-                    <input type="text" class="form-control" name="accession_no" id="access_no">
+                <label class='control-label'>Accession No.</label>
+                <input type="text" class="form-control" name="accession_no" id="access_no">
             </div>
             <!-- /.col -->
 
@@ -49,7 +49,7 @@
         <div id="data" style="display:none">
             <div class="row">
                 <!-- /.col -->
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label>Library No.</label>
                     <input type="text" class="form-control" name="library_no" id="library_no" placeholder="Not Available" disabled="disabled">
                 </div>
@@ -61,19 +61,19 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label>First Author</label>
                     <input type="text" class="form-control" name="auth1" id="auth1" placeholder="Not Available" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label>Second Author</label>
                     <input type="text" class="form-control" name="auth2" id="auth2" placeholder="Not Available" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <label>Type</label>
                     <input type="text" class="form-control" name="type" id="type" placeholder="Not Available" disabled="disabled">
                 </div>
@@ -316,6 +316,7 @@
                             $("#report").html(obj['value']);
                             $("#report").show();
                             $("#data").hide();
+                            $("#access_no").val('');
                             $("#access_no").focus();
                             $("#reset").show();
 
@@ -324,6 +325,7 @@
                             $("#report").html(obj['value']);
                             $("#report").show();
                             $("#data").hide();
+                            $("#access_no").val('');
                             $("#access_no").focus();
                             $("#reset").show();
 
@@ -424,8 +426,6 @@
                     success: function(response) {
                         var obj = $.parseJSON(response);
 
-                        console.log(obj);
-
                         if (obj['result'] == "success") 
                         {
                             swal("Issued Successfully",  "Accession No.: "+obj['value'], "success");
@@ -436,6 +436,7 @@
                             $("#access_no").removeAttr("disabled");
                             $("#reset").hide();
                             $("#get_data").show();
+                            $("#access_no").val('');
                             $("#access_no").focus();
                             $("#data").hide();
                         }

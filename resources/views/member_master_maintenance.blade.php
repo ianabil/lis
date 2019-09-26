@@ -16,14 +16,14 @@
             <div class="col-md-3 form-group required">
                     <!-- use this class as the red * will be after control-label -->
                     <label class='control-label'>First Name</label>
-                    <input type="text" class="form-control" name="first_name" id="first_name"> 
+                    <input type="text" class="form-control" name="first_name" id="first_name" onkeyup="this.value = this.value.toUpperCase();"> 
             </div>
 
             <!-- /.col -->
             <div class="col-md-3 form-group required">
                     <!-- use this class as the red * will be after control-label -->
                     <label class='control-label'>Last Name</label>
-                    <input type="text" class="form-control" name="last_name" id="last_name">
+                    <input type="text" class="form-control" name="last_name" id="last_name" onkeyup="this.value = this.value.toUpperCase();">
             </div>
 
 
@@ -31,7 +31,7 @@
             <div class="col-md-3">
                 <div class="form-group">            
                     <label>Designation</label>
-                    <input type="text" class="form-control" name="designation" id="designation">
+                    <input type="text" class="form-control" name="designation" id="designation" onkeyup="this.value = this.value.toUpperCase();">
                 </div>
             </div>
 
@@ -43,7 +43,7 @@
          <div class="row">       
          <div class="col-md-3">   
                 <div class="form-group">Present Address</label><br>
-                    <textarea rows="3" cols="35" class="form-control" name="present_address" id="present_address"></textarea>
+                    <textarea rows="3" cols="35" class="form-control" name="present_address" id="present_address" onkeyup="this.value = this.value.toUpperCase();"></textarea>
                 </div>
             </div>
                 <!-- /.col -->
@@ -51,21 +51,11 @@
             <div class="col-md-3">   
                 <div class="form-group">                          
                     <label>Permanent Address</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="do" value="do"> Same<br>
-                    <textarea rows="3" cols="35" class="form-control" name="permanent_address" id="permanent_address"></textarea>
+                    <textarea rows="3" cols="35" class="form-control" name="permanent_address" id="permanent_address" onkeyup="this.value = this.value.toUpperCase();"></textarea>
                 </div>
             </div>
             <!-- /.col -->
-
-
-                <div class="col-md-2">
-                    <div class="form-group">                            
-                        <label>Valid from Date</label>
-                        <input type="text" class="form-control date" style="height:25px;" name="valid_from" id="valid_from"  value="{{date('d-m-Y')}}" placeholder="From">            
-                      
-                        <input type="text" class="form-control date" style="height:25px; margin-top:10px" name="valid_upto" id="valid_upto"  placeholder="To">            
-                    </div>
-                </div>
-                <!-- /.col -->  
+               
 
                 <div class="col-md-1">
                 </div>
@@ -117,10 +107,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>                        
                         <th>Designation</th>                            
-                        <th>Present Address</th>
-                        <th>Permanent Address</th>                            
-                        <th>Valid From</th>   
-                        <th>Valid Upto</th>  
+                        <th>Address</th>
                         <th>Action</th>                         
                     </thead>                    
             </table>
@@ -145,12 +132,7 @@
 
     <script>
         $(document).ready(function(){
-            $( ".date").datepicker({ 
-                format: 'dd-mm-yyyy', 
-                minDate:0 
-            }); // Date picker initialization
-
-
+            
      /* Variable decleration start*/
 
                 var member_code;
@@ -159,8 +141,6 @@
                 var designation;
                 var present_address;
                 var permanent_address;
-                var valid_from;
-                var valid_upto;
 
      /* Variable decleration end*/
 
@@ -223,8 +203,6 @@
                 designation = $("#designation").val();
                 present_address = $("#present_address").val();
                 permanent_address = $("#permanent_address").val();
-                valid_from = $("#valid_from").val();
-                valid_upto = $("#valid_upto").val();
 
 
                 $.ajax({
@@ -236,9 +214,7 @@
                         last_name: last_name,
                         designation: designation,
                         present_address: present_address,                        
-                        permanent_address: permanent_address,                                                                        
-                        valid_from: valid_from,
-                        valid_upto : valid_upto
+                        permanent_address: permanent_address,
                     },
                     success: function(response){
                             var obj = $.parseJSON(response);
@@ -303,14 +279,7 @@
                  "data": "UDESIG" },
                  {"class": "present_address data", 
                  "data": "UPRADD1" },
-                 {"class": "permanent_address data", 
-                 "data": "UPRADD2" },                
-                 {"class": "valid_from data", 
-                 "data": "VALIDFR" },  
-                 {"class": "valid_upto data", 
-                 "data": "VALIDTO" },  
-                {"class": "delete", 
-                 "data": "action" }
+                {"data": "action" }
             ]
 
 
@@ -325,10 +294,7 @@
             first_name = $(this).closest("tr").find(".first_name").text();
             last_name = $(this).closest("tr").find(".last_name").text();
             designation = $(this).closest("tr").find(".designation").text();
-            present_address = $(this).closest("tr").find(".present_address").text();            
-            permanent_address = $(this).closest("tr").find(".permanent_address").text();
-            valid_from = $(this).closest("tr").find(".valid_from").text();
-            valid_upto = $(this).closest("tr").find(".valid_upto").text();
+            present_address = $(this).closest("tr").find(".present_address").text(); 
 
 
             $("#report").hide();    
@@ -341,10 +307,7 @@
                         first_name: first_name,
                         last_name: last_name,
                         designation: designation,
-                        present_address: present_address,                        
-                        permanent_address: permanent_address,                                                                        
-                        valid_from: valid_from,
-                        valid_upto : valid_upto
+                        present_address: present_address, 
                     },
                 success:function(response){
 

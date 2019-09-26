@@ -188,8 +188,7 @@
                  "data": "LOCNAME"},
                 {"class": "alm_rack data", 
                  "data": "ALM_RACK" },
-                {"class": "delete", 
-                 "data": "action" }
+                {"data": "action" }
             ]
 
         }); // DataTable initialization with Server-Processing

@@ -2,15 +2,10 @@
 <!-- Main content -->
 <div class="box box-default">
     <div class="box-header with-border">
-        <h3 class="box-title">User Master Maintenance</h3>
-        <!-- <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-        </div> -->
+        <h3 class="box-title">User Master Maintenance</h3>        
     </div>
     <!-- /.box-header -->
-    <div class="box-body">
-    
+    <div class="box-body">    
         <div class="row">        
             <div class="col-md-offset-3 col-md-3">
                 <div class="form-group">
@@ -50,11 +45,11 @@
                 <label>User Type</label>
                 <select class="form-control" name="user_type" id="user_type">
                     <option value="">Select One Option. . . </option>
-                    <option value="G">General</option>
-                    <option value="S">Super</option>
+                    <option value="G">General User</option>
+                    <option value="S">Super User</option>
+                    <option value="A">Administrator</option>
                 </select>
             </div>
-
             
              <div class="col-md-offset-4 col-md-3">
                 <div class="form-group">
@@ -63,9 +58,6 @@
                     <button type="button" class="form-control btn btn-primary" id="create_user">Create User
                 </div>
             </div>
-            
-           
-
             <!-- /.col -->
         </div>
 

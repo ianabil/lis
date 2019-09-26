@@ -56,7 +56,10 @@ class TitleMasterMaintainanceController extends Controller
             foreach($titles as $titles){
                 $nestedData['TIT_CODE'] = $titles->TIT_CODE;
                 $nestedData['TIT_DESC'] = $titles->TIT_DESC;
-                $nestedData['action'] = "<i class='fa fa-trash' aria-hidden='true'></i>";
+                if(Auth::user()->status == 'A')              
+                    $nestedData['action'] = '<i class="fa fa-trash delete" aria-hidden="true"></i>';
+                else
+                    $nestedData['action'] = '<i class="fa fa-trash" aria-hidden="true" style="opacity: 0.6;cursor: not-allowed"></i>';
 
                 $data[] = $nestedData;
             }

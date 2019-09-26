@@ -44,7 +44,7 @@
 <div id="data" style="display:none">
             <div class="row">
                 <!-- /.col -->
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label>Library No.</label>
                     <input type="text" class="form-control" name="library_no" id="library_no" placeholder="Not Mentioned" disabled="disabled">
                 </div>
@@ -56,19 +56,19 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label>First Author</label>
                     <input type="text" class="form-control" name="auth1" id="auth1" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label>Second Author</label>
                     <input type="text" class="form-control" name="auth2" id="auth2" placeholder="Not Mentioned" disabled="disabled">
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <label>Type</label>
                     <input type="text" class="form-control" name="type" id="type" placeholder="Not Mentioned" disabled="disabled">
                 </div>
@@ -292,12 +292,16 @@
                             $("#report").html(obj['value']);
 
                             $("#data").hide();
+
+                            $("#access_no").val('');
                         }
                         else if(obj['result']=="not_issued" || obj['result']=="discarded")
                         {                            
                             $("#report").html(obj['value']);
 
                             $("#data").hide();
+
+                            $("#access_no").val('');
                             
                         }
                         else if(obj['result']=="can_be_returned")

@@ -70,28 +70,40 @@
             <section class="sidebar">
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li><a href="search"><i class="fa fa-circle-o text-violate"></i> <span>Search Book / Journal</span></a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-search"></i>
+                            <span>Search</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="search"><i class="fa fa-circle-o text-red"></i> <span>Composite Search</span></a></li>
+                            <li><a href="issue_return_search"><i class="fa fa-circle-o text-yellow"></i> <span>Issue / Return Search</span></a></li>a></li>
+                        </ul>
+                    </li>
                     <li><a href="entry_new_book"><i class="fa fa-circle-o text-red"></i> <span>Entry New Book / Journal</span></a></li>
                     <li><a href="update_book"><i class="fa fa-circle-o text-yellow"></i> <span>Modify Book / Journal</span></a></li>
                     <li><a href="issue_books"><i class="fa fa-circle-o text-aqua"></i> <span>Issue of Book / Journal</span></a></li>
                     <li><a href="receipt_books"><i class="fa fa-circle-o text-violate"></i> <span>Return of Book / Journal</span></a></li>
 
-                    @if(Auth::user()->status == 'S')
-                    
+                    @if(Auth::user()->status == 'S' || Auth::user()->status == 'A')                    
                         <li class="header"></li>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-edit"></i>
-                                <span>Master Maintainance</span>
+                                <span>Master Maintenance</span>
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="title_master_maintainance"><i class="fa fa-circle-o text-red"></i> <span>Title Master Maintainance</span></a></li>
-                                <li><a href="subject_master_maintainance"><i class="fa fa-circle-o text-yellow"></i> <span>Subject Master Maintainance</span></a></li>
-                                <li><a href="location_master_maintainance"><i class="fa fa-circle-o text-aqua"></i> <span>Location Master Maintainance</span></a></li>
-                                <li><a href="publisher_master_maintainance"><i class="fa fa-circle-o text-violate"></i> <span>Publisher Master Maintainance</span></a></li>
-                                <li><a href="member_master_maintenance"><i class="fa fa-circle-o text-red"></i> <span>Member Master Maintainance</span></a></li>
-                                <li><a href="user_master_maintenance"><i class="fa fa-circle-o text-green"></i> <span>User Master Maintainance</span></a></li>                                
+                                <li><a href="title_master_maintainance"><i class="fa fa-circle-o text-red"></i> <span>Title Master Maintenance</span></a></li>
+                                <li><a href="subject_master_maintainance"><i class="fa fa-circle-o text-yellow"></i> <span>Subject Master Maintenance</span></a></li>
+                                <li><a href="location_master_maintainance"><i class="fa fa-circle-o text-aqua"></i> <span>Location Master Maintenance</span></a></li>
+                                <li><a href="supplier_master_maintenance"><i class="fa fa-circle-o text-aqua"></i> <span>Supplier Master Maintenance</span></a></li>
+                                <li><a href="publisher_master_maintainance"><i class="fa fa-circle-o text-violate"></i> <span>Publisher Master Maintenance</span></a></li>
+                                <li><a href="member_master_maintenance"><i class="fa fa-circle-o text-red"></i> <span>Member Master Maintenance</span></a></li>
+                                @if(Auth::user()->status == 'A')
+                                    <li><a href="user_master_maintenance"><i class="fa fa-circle-o text-green"></i> <span>User Master Maintenance</span></a></li>                                
+                                @endif
                                 <li><a href="marked_for_discarded_book"><i class="fa fa-circle-o text-purple"></i> <span>Discard Book / Journal</span></a></li>
                             </ul>
                         </li>

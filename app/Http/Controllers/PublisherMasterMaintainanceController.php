@@ -61,7 +61,10 @@ class PublisherMasterMaintainanceController extends Controller
                 $nestedData['PUBCODE'] = $publisher->PUBCODE;
                 $nestedData['PUBNAME'] = $publisher->PUBNAME;
                 $nestedData['PUBADD'] = $publisher->PUBADD;
-                $nestedData['action'] = "<i class='fa fa-trash' aria-hidden='true'></i>";
+                if(Auth::user()->status == 'A')              
+                    $nestedData['action'] = '<i class="fa fa-trash delete" aria-hidden="true"></i>';
+                else
+                    $nestedData['action'] = '<i class="fa fa-trash" aria-hidden="true" style="opacity: 0.6;cursor: not-allowed"></i>';
 
                 $data[] = $nestedData;
             }

@@ -89,8 +89,7 @@
                 "data": "TIT_CODE" },
                 {"class": "title data",   
                  "data": "TIT_DESC" },
-                {"class": "delete", 
-                 "data": "action" }
+                {"data": "action" }
             ]
              
         }); 

@@ -1,15 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
    if(Auth::check())
@@ -35,6 +25,12 @@ Route::group(['middleware' => ['auth']], function () {
       Route::post('search/search','SearchController@search');
 
       Route::post('search/search/issued_to','SearchController@issued_to');      
+
+      Route::get('issue_return_search', 'SearchController@issue_return_search_index');
+
+      Route::post('issue_search/issue_search','SearchController@issue_search');
+
+      Route::post('return_search/return_search','SearchController@return_search');
 
       Route::resource('books','BooksController');
       
@@ -101,6 +97,18 @@ Route::group(['middleware' => ['auth']], function () {
       Route::post('location_master_maintainance/update','LocationMasterMaintenanceController@update_location');
             
       Route::post('location_master_maintainance/delete','LocationMasterMaintenanceController@destroy');
+
+      Route::get('supplier_master_maintenance', function () {
+         return view('supplier_master_maintenance');
+      });
+
+      Route::post('show_all_supplier','SupplierMasterMaintenanceController@get_all_supplier_data');
+            
+      Route::post('supplier_master_maintenance/store','SupplierMasterMaintenanceController@store');
+            
+      Route::post('supplier_master_maintenance/update','SupplierMasterMaintenanceController@update_supplier');
+            
+      Route::post('supplier_master_maintenance/delete','SupplierMasterMaintenanceController@destroy');
 
       Route::get('publisher_master_maintainance', function () {
          return view('publisher_master_maintainance');

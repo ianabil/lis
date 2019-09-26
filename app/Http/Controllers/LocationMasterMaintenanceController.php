@@ -95,8 +95,11 @@ class LocationMasterMaintenanceController extends Controller
             foreach($location as $loc){
                 $nestedData['LOCCD'] = $loc->LOCCD;
                 $nestedData['LOCNAME'] = $loc->LOCNAME;
-                $nestedData['ALM_RACK'] = $loc->ALM_RACK;                
-                $nestedData['action'] = '<i class="fa fa-trash" aria-hidden="true"></i>';
+                $nestedData['ALM_RACK'] = $loc->ALM_RACK;  
+                if(Auth::user()->status == 'A')              
+                    $nestedData['action'] = '<i class="fa fa-trash delete" aria-hidden="true"></i>';
+                else
+                    $nestedData['action'] = '<i class="fa fa-trash" aria-hidden="true" style="opacity: 0.6;cursor: not-allowed"></i>';
 
                 $data[] = $nestedData;
             }
